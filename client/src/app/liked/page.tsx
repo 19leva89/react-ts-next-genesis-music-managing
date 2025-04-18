@@ -1,12 +1,12 @@
-import getLikedSongs from '@/actions/getLikedSongs'
-import Header from '@/components/Header'
-import LikedContent from './_components/liked-content'
-
 import Image from 'next/image'
+
+import { Header } from '@/components/shared'
+import getLikedSongs from '@/actions/getLikedSongs'
+import { LikedContent } from './_components/liked-content'
 
 export const revalidate = 0
 
-const Liked = async () => {
+const LikedPage = async () => {
 	const songs = await getLikedSongs()
 
 	return (
@@ -29,4 +29,4 @@ const Liked = async () => {
 	)
 }
 
-export default Liked
+export default LikedPage

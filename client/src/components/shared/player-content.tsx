@@ -1,18 +1,15 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useSound } from 'use-sound'
+import { useEffect, useState } from 'react'
 import { BsPauseFill, BsPlayFill } from 'react-icons/bs'
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2'
 import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai'
-import useSound from 'use-sound'
 
 import { Song } from '@/types'
-
-import usePlayer from '@/src/hooks/use-player'
-
-import MediaItem from './media-item'
-import LikeButton from './like-button'
-import Slider from './slider'
+import { usePlayer } from '@/hooks/use-player'
+import { LikeButton, MediaItem } from '@/components/shared'
+import { Slider } from '@/components/shared/slider'
 
 interface Props {
 	song: Song
@@ -42,11 +39,11 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 		if (player.ids.length === 0) return
 
 		const currentIndex = player.ids.findIndex((id) => id === player.activeId)
-		const previoustSong = player.ids[currentIndex - 1]
+		const previousSong = player.ids[currentIndex - 1]
 
-		if (!previoustSong) return player.setId(player.ids[player.ids.length - 1])
+		if (!previousSong) return player.setId(player.ids[player.ids.length - 1])
 
-		player.setId(previoustSong)
+		player.setId(previousSong)
 	}
 
 	const [play, { pause, sound }] = useSound(songUrl, {
@@ -83,6 +80,7 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 			<div className="flex w-full justify-start">
 				<div className="flex items-center gap-x-4">
 					<MediaItem data={song} />
+
 					<LikeButton songId={song.id} />
 				</div>
 			</div>
@@ -118,6 +116,7 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 			<div className="hidden md:flex w-full justify-end pr-2">
 				<div className="flex items-center gap-x-2 w-[120px]">
 					<VolumeIcon onClick={toggleMute} className="cursor-pointer" size={34} />
+
 					<Slider value={volume} onChange={(value) => setVolume(value)} />
 				</div>
 			</div>

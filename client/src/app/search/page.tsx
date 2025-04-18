@@ -1,9 +1,9 @@
-import Header from '@/components/Header'
-import SearchInput from '@/components/SearchInput'
-import SearchContent from './_components/search-content'
+import { Header, SearchInput } from '@/components/shared'
+
+import { SearchContent } from './_components/search-content'
 import getSongsByTitle from '@/actions/getSongsByTitle'
 
-interface SearchProps {
+interface Props {
 	searchParams: {
 		title: string
 	}
@@ -11,7 +11,7 @@ interface SearchProps {
 
 export const revalidate = 0
 
-const Search = async ({ searchParams }: SearchProps) => {
+const SearchPage = async ({ searchParams }: Props) => {
 	const songs = await getSongsByTitle(searchParams.title)
 
 	return (
@@ -19,12 +19,14 @@ const Search = async ({ searchParams }: SearchProps) => {
 			<Header className="from-bg-neutral-900">
 				<div className="mb-2 flex flex-col gap-y-6">
 					<h1 className="text-white text-3xl font-semibold">Search</h1>
+
 					<SearchInput />
 				</div>
 			</Header>
+
 			<SearchContent songs={songs} />
 		</div>
 	)
 }
 
-export default Search
+export default SearchPage

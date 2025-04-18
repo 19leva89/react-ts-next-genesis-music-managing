@@ -20,6 +20,7 @@ export const SidebarItem = ({ icon: Icon, label, active, href }: Props) => {
 			)}
 		>
 			<Icon size={26} />
+
 			<p className="truncate w-full">{label}</p>
 		</Link>
 	)

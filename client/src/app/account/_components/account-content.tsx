@@ -1,15 +1,15 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-import useSubscribeModal from '@/src/hooks/use-subscribe-modal'
-import { useUser } from '@/src/hooks/use-user'
-import { postData } from '@/libs/helpers'
-import Button from '@/components/Button'
+import { useUser } from '@/hooks/use-user'
+import { postData } from '@/lib/helpers'
+import { Button } from '@/components/shared/button'
+import { useSubscribeModal } from '@/hooks/use-subscribe-modal'
 
-const AccountContent = () => {
+export const AccountContent = () => {
 	const router = useRouter()
 	const subscribeModal = useSubscribeModal()
 	const { isLoading, subscription, user } = useUser()
@@ -59,5 +59,3 @@ const AccountContent = () => {
 		</div>
 	)
 }
-
-export default AccountContent

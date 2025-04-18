@@ -3,8 +3,8 @@
 import Image from 'next/image'
 
 import { Song } from '@/types'
-import useLoadImage from '@/src/hooks/use-load-image'
-import PlayButton from './play-button'
+import { PlayButton } from '@/components/shared'
+import { useLoadImage } from '@/hooks/use-load-image'
 
 interface Props {
 	data: Song

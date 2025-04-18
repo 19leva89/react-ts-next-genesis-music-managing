@@ -1,10 +1,9 @@
 'use client'
 
-import usePlayer from '@/src/hooks/use-player'
-import useGetSongById from '@/src/hooks/use-get-song-by-id'
-import useLoadSongUrl from '@/src/hooks/use-load-song-url'
-
-import PlayerContent from './player-content'
+import { usePlayer } from '@/hooks/use-player'
+import { PlayerContent } from '@/components/shared'
+import { useLoadSongUrl } from '@/hooks/use-load-song-url'
+import { useGetSongById } from '@/hooks/use-get-song-by-id'
 
 export const Player = () => {
 	const player = usePlayer()

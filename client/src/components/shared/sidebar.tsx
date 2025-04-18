@@ -1,17 +1,14 @@
 'use client'
 
-import { ReactNode, useMemo } from 'react'
-import { usePathname } from 'next/navigation'
 import { HiHome } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
-
-import Box from './box'
-import SidebarItem from './sidebar-item'
-import Library from './library'
+import { ReactNode, useMemo } from 'react'
+import { usePathname } from 'next/navigation'
 
 import { Song } from '@/types'
-import usePlayer from '@/src/hooks/use-player'
 import { cn } from '@/lib/utils'
+import { usePlayer } from '@/hooks/use-player'
+import { Box, Library, SidebarItem } from '@/components/shared'
 
 interface Props {
 	children: ReactNode

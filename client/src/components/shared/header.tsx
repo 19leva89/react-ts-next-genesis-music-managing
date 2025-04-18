@@ -1,20 +1,19 @@
 'use client'
 
+import { toast } from 'sonner'
 import { ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { HiHome } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { FaUserAlt } from 'react-icons/fa'
-import { toast } from 'sonner'
+import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-import Button from './button'
-
-import useAuthModal from '@/src/hooks/use-auth-modal'
-import { useUser } from '@/src/hooks/use-user'
-import usePlayer from '@/src/hooks/use-player'
 import { cn } from '@/lib/utils'
+import { useUser } from '@/hooks/use-user'
+import { usePlayer } from '@/hooks/use-player'
+import { Button } from '@/components/shared/button'
+import { useAuthModal } from '@/hooks/use-auth-modal'
 
 interface Props {
 	children: ReactNode

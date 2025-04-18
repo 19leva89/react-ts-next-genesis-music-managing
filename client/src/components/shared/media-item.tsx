@@ -1,11 +1,10 @@
 'use client'
 
-import useLoadImage from '@/src/hooks/use-load-image'
-import usePlayer from '@/src/hooks/use-player'
+import Image from 'next/image'
 
 import { Song } from '@/types'
-
-import Image from 'next/image'
+import { usePlayer } from '@/hooks/use-player'
+import { useLoadImage } from '@/hooks/use-load-image'
 
 interface Props {
 	data: Song

@@ -1,19 +1,14 @@
 'use client'
 
- 
-
 import { Song } from '@/types'
+import { useOnPlay } from '@/hooks/use-on-play'
+import { LikeButton, MediaItem } from '@/components/shared'
 
-import MediaItem from '@/components/MediaItem'
-import LikeButton from '@/components/LikeButton'
-
-import useOnPlay from '@/src/hooks/use-on-play'
-
-interface SearchContentProps {
+interface Props {
 	songs: Song[]
 }
 
-const SearchContent <SearchContentProps> = ({ songs }) => {
+export const SearchContent = ({ songs }: Props) => {
 	const onPlay = useOnPlay(songs)
 
 	if (songs.length === 0)
@@ -26,11 +21,10 @@ const SearchContent <SearchContentProps> = ({ songs }) => {
 					<div className="flex-1">
 						<MediaItem data={song} onClick={(id: string) => onPlay(id)} />
 					</div>
+
 					<LikeButton songId={song.id} />
 				</div>
 			))}
 		</div>
 	)
 }
-
-export default SearchContent

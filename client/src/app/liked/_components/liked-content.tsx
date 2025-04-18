@@ -1,21 +1,18 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Song } from '@/types'
+import { useUser } from '@/hooks/use-user'
+import { useOnPlay } from '@/hooks/use-on-play'
+import { LikeButton, MediaItem } from '@/components/shared'
 
-import { useUser } from '@/src/hooks/use-user'
-import useOnPlay from '@/src/hooks/use-on-play'
-
-import MediaItem from '@/components/MediaItem'
-import LikeButton from '@/components/LikeButton'
-
-interface LikedContentProps {
+interface Props {
 	songs: Song[]
 }
 
-const LikedContent <LikedContentProps> = ({ songs }) => {
+export const LikedContent = ({ songs }: Props) => {
 	const router = useRouter()
 	const { isLoading, user } = useUser()
 
@@ -35,11 +32,10 @@ const LikedContent <LikedContentProps> = ({ songs }) => {
 					<div className="flex-1">
 						<MediaItem onClick={(id: string) => onPlay(id)} data={song} />
 					</div>
+
 					<LikeButton songId={song.id} />
 				</div>
 			))}
 		</div>
 	)
 }
-
-export default LikedContent

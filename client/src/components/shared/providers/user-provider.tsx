@@ -1,13 +1,9 @@
 'use client'
 
-import { MyUserContextProvider } from '@/hooks/useUser'
+import { PropsWithChildren } from 'react'
 
-interface UserProviderProps {
-	children:  ReactNode
-}
+import { MyUserContextProvider } from '@/hooks/use-user'
 
-const UserProvider <UserProviderProps> = ({ children }) => {
+export const UserProvider = ({ children }: PropsWithChildren) => {
 	return <MyUserContextProvider>{children}</MyUserContextProvider>
 }
-
-export default UserProvider

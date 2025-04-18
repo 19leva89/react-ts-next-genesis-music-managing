@@ -1,18 +1,15 @@
 'use client'
 
-import  { useState } from 'react'
-import { toast } from  'sonner'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-import Modal from './modal'
-import Button from './button'
-
+import { postData } from '@/lib/helpers'
+import { useUser } from '@/hooks/use-user'
+import { getStripe } from '@/lib/stripe-client'
 import { Price, ProductWithPrice } from '@/types'
-
-import { useUser } from '@/src/hooks/use-user'
-import useSubscribeModal from '@/src/hooks/use-subscribe-modal'
-
-import { postData } from '@/libs/helpers'
-import { getStripe } from '@/libs/stripeClient'
+import { Modal } from '@/components/shared/modal'
+import { Button } from '@/components/shared/button'
+import { useSubscribeModal } from '@/hooks/use-subscribe-modal'
 
 interface Props {
 	products: ProductWithPrice[]
@@ -106,5 +103,3 @@ export const SubscribeModal = ({ products }: Props) => {
 		</Modal>
 	)
 }
-
- 

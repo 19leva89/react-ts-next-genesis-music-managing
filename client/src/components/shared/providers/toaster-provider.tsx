@@ -2,7 +2,7 @@
 
 import { Toaster } from 'sonner'
 
-const ToasterProvider = () => {
+export const ToasterProvider = () => {
 	return (
 		<Toaster
 			toastOptions={{
@@ -14,5 +14,3 @@ const ToasterProvider = () => {
 		/>
 	)
 }
-
-export default ToasterProvider

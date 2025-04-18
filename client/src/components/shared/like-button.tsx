@@ -1,13 +1,13 @@
 'use client'
 
-import useAuthModal from '@/src/hooks/use-auth-modal'
-import { useUser } from '@/src/hooks/use-user'
-
-import { useSessionContext } from '@supabase/auth-helpers-react'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { useSessionContext } from '@supabase/auth-helpers-react'
+
+import { useAuthModal } from '@/hooks/use-auth-modal'
+import { useUser } from '@/hooks/use-user'
 
 interface Props {
 	songId: string

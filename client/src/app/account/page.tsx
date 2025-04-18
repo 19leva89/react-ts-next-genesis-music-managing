@@ -1,7 +1,7 @@
-import Header from '@/components/Header'
-import AccountContent from './_components/account-content'
+import { Header } from '@/components/shared'
+import { AccountContent } from './_components/account-content'
 
-const Account = () => {
+const AccountPage = () => {
 	return (
 		<div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
 			<Header className="from-bg-neutral-900">
@@ -9,9 +9,10 @@ const Account = () => {
 					<h1 className="text-white text-3xl font-semibold">Account Settings</h1>
 				</div>
 			</Header>
+
 			<AccountContent />
 		</div>
 	)
 }
 
-export default Account
+export default AccountPage

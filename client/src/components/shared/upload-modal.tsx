@@ -1,18 +1,17 @@
 'use client'
 
-import React, { useState } from 'react'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import uniqid from 'uniqid'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { toast } from 'sonner'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
-import Modal from './modal'
-import Input from './input'
-import Button from './button'
-
-import useUploadModal from '@/src/hooks/use-upload-modal'
-import { useUser } from '@/src/hooks/use-user'
+import { useUser } from '@/hooks/use-user'
+import { Modal } from '@/components/shared/modal'
+import { Input } from '@/components/shared/input'
+import { Button } from '@/components/shared/button'
+import { useUploadModal } from '@/hooks/use-upload-modal'
 
 export const UploadModal = () => {
 	const uploadModal = useUploadModal()
@@ -149,5 +148,3 @@ export const UploadModal = () => {
 		</Modal>
 	)
 }
-
- 
