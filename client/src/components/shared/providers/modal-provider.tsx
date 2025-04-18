@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { ProductWithPrice } from '@/types'
-import { AuthModal, SubscribeModal, UploadModal } from '@/components/shared'
+import { SubscribeModal, UploadModal } from '@/components/shared'
 
 interface Props {
 	products: ProductWithPrice[]
@@ -20,8 +20,6 @@ export const ModalProvider = ({ products }: Props) => {
 
 	return (
 		<>
-			<AuthModal />
-
 			<UploadModal />
 
 			<SubscribeModal products={products} />

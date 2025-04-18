@@ -1,4 +1,4 @@
-import getSongs from '@/actions/getSongs'
+// import getSongs from '@/actions/getSongs'
 
 import { Header, ListItem } from '@/components/shared'
 
@@ -7,7 +7,7 @@ import { PageContent } from './_components/page-content'
 export const revalidate = 0
 
 async function HomePage() {
-	const songs = await getSongs()
+	// const songs = await getSongs()
 
 	return (
 		<div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
@@ -27,7 +27,7 @@ async function HomePage() {
 				</div>
 
 				<div>
-					<PageContent songs={songs} />
+					<PageContent songs={[]} />
 				</div>
 			</div>
 		</div>

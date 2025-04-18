@@ -1,4 +1,3 @@
-export { AuthModal } from './auth-modal'
 export { Box } from './box'
 export { Header } from './header'
 export { Library } from './library'

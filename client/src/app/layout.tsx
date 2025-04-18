@@ -4,7 +4,6 @@ import { Figtree } from 'next/font/google'
 
 import { Toaster } from '@/components/ui'
 import { Player, Sidebar } from '@/components/shared'
-import { ModalProvider, SupabaseProvider, UserProvider } from '@/components/shared/providers'
 
 import './globals.css'
 
@@ -26,15 +25,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 			<body className={font.className}>
 				<Toaster position="bottom-right" expand={false} richColors />
 
-				<SupabaseProvider>
-					<UserProvider>
-						<ModalProvider products={products} />
+				<Sidebar songs={[]}>{children}</Sidebar>
 
-						<Sidebar songs={userSongs}>{children}</Sidebar>
-
-						<Player />
-					</UserProvider>
-				</SupabaseProvider>
+				<Player />
 			</body>
 		</html>
 	)

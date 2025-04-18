@@ -4,7 +4,6 @@ import { TbPlaylist } from 'react-icons/tb'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 import { Song } from '@/types'
-import { useUser } from '@/hooks/use-user'
 import { MediaItem } from '@/components/shared'
 import { useOnPlay } from '@/hooks/use-on-play'
 import { useAuthModal } from '@/hooks/use-auth-modal'
@@ -19,15 +18,14 @@ export const Library = ({ songs }: Props) => {
 	const subscribeModal = useSubscribeModal()
 	const authModal = useAuthModal()
 	const uploadModal = useUploadModal()
-	const { user, subscription } = useUser()
 
 	const onPlay = useOnPlay(songs)
 
 	const onClick = () => {
-		if (!user) return authModal.onOpen()
+		// if (!user) return authModal.onOpen()
 
-		// Only Subscribed User Can Upload Songs.
-		if (!subscription) return subscribeModal.onOpen()
+		// // Only Subscribed User Can Upload Songs.
+		// if (!subscription) return subscribeModal.onOpen()
 
 		return uploadModal.onOpen()
 	}

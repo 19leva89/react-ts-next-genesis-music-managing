@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { postData } from '@/lib/helpers'
-import { useUser } from '@/hooks/use-user'
-import { getStripe } from '@/lib/stripe-client'
 import { Price, ProductWithPrice } from '@/types'
 import { Modal } from '@/components/shared/modal'
 import { Button } from '@/components/shared/button'
@@ -27,7 +25,7 @@ const formatPrice = (price: Price) => {
 
 export const SubscribeModal = ({ products }: Props) => {
 	const subscribeModal = useSubscribeModal()
-	const { user, isLoading, subscription } = useUser()
+	// const { user, isLoading, subscription } = useUser()
 	const [priceIdLoading, setPriceIdLoading] = useState<string>()
 
 	const onChange = (open: boolean) => {
@@ -37,15 +35,15 @@ export const SubscribeModal = ({ products }: Props) => {
 	const handleCheckout = async (price: Price) => {
 		setPriceIdLoading(price.id)
 
-		if (!user) {
-			setPriceIdLoading(undefined)
-			return toast.error('Must be Logged In to Subscribe.')
-		}
+		// if (!user) {
+		// 	setPriceIdLoading(undefined)
+		// 	return toast.error('Must be Logged In to Subscribe.')
+		// }
 
-		if (subscription) {
-			setPriceIdLoading(undefined)
-			return toast('Already Subscribed.')
-		}
+		// if (subscription) {
+		// 	setPriceIdLoading(undefined)
+		// 	return toast('Already Subscribed.')
+		// }
 
 		try {
 			const { sessionId } = await postData({
@@ -53,8 +51,8 @@ export const SubscribeModal = ({ products }: Props) => {
 				data: { price },
 			})
 
-			const stripe = await getStripe()
-			stripe?.redirectToCheckout({ sessionId })
+			// const stripe = await getStripe()
+			// stripe?.redirectToCheckout({ sessionId })
 		} catch (error) {
 			console.error(error)
 			toast.error((error as Error)?.message)
