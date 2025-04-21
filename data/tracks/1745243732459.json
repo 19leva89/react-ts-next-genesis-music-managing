@@ -1,0 +1,13 @@
+{
+  "title": "string",
+  "artist": "string",
+  "album": "string",
+  "genres": [
+    "string"
+  ],
+  "coverImage": "string",
+  "slug": "string",
+  "id": "1745243732459",
+  "createdAt": "2025-04-21T13:55:32.459Z",
+  "updatedAt": "2025-04-21T13:55:32.459Z"
+}

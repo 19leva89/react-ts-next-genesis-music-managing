@@ -1,17 +1,12 @@
 'use client'
 
-import { toast } from 'sonner'
 import { ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { HiHome } from 'react-icons/hi'
-import { BiSearch } from 'react-icons/bi'
-import { FaUserAlt } from 'react-icons/fa'
-import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
+import { ChevronLeftIcon, ChevronRightIcon, HouseIcon, SearchIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui'
 import { usePlayer } from '@/hooks/use-player'
-import { Button } from '@/components/shared/button'
-import { useAuthModal } from '@/hooks/use-auth-modal'
 
 interface Props {
 	children: ReactNode
@@ -20,61 +15,71 @@ interface Props {
 
 export const Header = ({ children, className }: Props) => {
 	const player = usePlayer()
-	const authModal = useAuthModal()
+
 	const router = useRouter()
-
-	// const supabaseClient = useSupabaseClient()
-
-	const handleLogout = async () => {
-		// const { error } = await supabaseClient.auth.signOut()
-		player.reset()
-		router.refresh()
-
-		// if (error) toast.error(error.message)
-		toast.success('Logged Out!')
-	}
 
 	return (
 		<div className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)}>
 			<div className="w-full mb-4 justify-between flex items-center">
 				<div className="hidden md:flex gap-x-2 items-center">
-					<button
+					<Button
+						variant="default"
+						size="icon"
 						onClick={() => router.back()}
-						className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition"
+						className="rounded-full bg-black cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
 					>
-						<RxCaretLeft size={35} className="text-white" />
-					</button>
-					<button
+						<ChevronLeftIcon size={35} className="size-6 text-white" />
+					</Button>
+
+					<Button
+						variant="default"
+						size="icon"
 						onClick={() => router.forward()}
-						className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition"
+						className="rounded-full bg-black cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
 					>
-						<RxCaretRight size={35} className="text-white" />
-					</button>
+						<ChevronRightIcon size={35} className="size-6 text-white" />
+					</Button>
 				</div>
 
-				<div className="flex md:hidden gap-x-2 items-center">
-					<button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition">
-						<HiHome size={20} className="text-black" />
-					</button>
-					<button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition">
-						<BiSearch size={20} className="text-black" />
-					</button>
+				<div className="flex items-center gap-x-2 md:hidden">
+					<Button
+						variant="secondary"
+						size="icon"
+						className="rounded-full bg-white cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
+					>
+						<HouseIcon size={20} className="size-5 text-black" />
+					</Button>
+
+					<Button
+						variant="secondary"
+						size="icon"
+						className="rounded-full bg-white cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
+					>
+						<SearchIcon size={20} className="size-5 text-black" />
+					</Button>
 				</div>
 
 				<div className="flex justify-between items-center gap-x-4">
-					<div>
-						<Button onClick={authModal.onOpen} className="bg-transparent text-neutral-300 font-medium">
-							Sign Up
-						</Button>
-					</div>
+					<Button
+						variant="ghost"
+						size="lg"
+						onClick={() => {}}
+						className="rounded-xl cursor-pointer transition ease-in-out duration-300"
+					>
+						Sign Up
+					</Button>
 
-					<div>
-						<Button onClick={authModal.onOpen} className="bg-white px-6 py-2">
-							Log In
-						</Button>
-					</div>
+					<Button
+						variant="outline"
+						size="lg"
+						onClick={() => {}}
+						className="rounded-xl cursor-pointer transition ease-in-out duration-300"
+					>
+						Log In
+					</Button>
 				</div>
 			</div>
+
 			{children}
 		</div>
 	)

@@ -1,32 +1,22 @@
 'use client'
 
-import { TbPlaylist } from 'react-icons/tb'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { ListMusicIcon, PlusIcon } from 'lucide-react'
 
-import { Song } from '@/types'
+import { Track } from '@/app/types'
 import { MediaItem } from '@/components/shared'
 import { useOnPlay } from '@/hooks/use-on-play'
-import { useAuthModal } from '@/hooks/use-auth-modal'
 import { useUploadModal } from '@/hooks/use-upload-modal'
-import { useSubscribeModal } from '@/hooks/use-subscribe-modal'
 
 interface Props {
-	songs: Song[]
+	tracks: Track[]
 }
 
-export const Library = ({ songs }: Props) => {
-	const subscribeModal = useSubscribeModal()
-	const authModal = useAuthModal()
+export const Library = ({ tracks }: Props) => {
 	const uploadModal = useUploadModal()
 
-	const onPlay = useOnPlay(songs)
+	const onPlay = useOnPlay(tracks)
 
 	const onClick = () => {
-		// if (!user) return authModal.onOpen()
-
-		// // Only Subscribed User Can Upload Songs.
-		// if (!subscription) return subscribeModal.onOpen()
-
 		return uploadModal.onOpen()
 	}
 
@@ -34,21 +24,21 @@ export const Library = ({ songs }: Props) => {
 		<div className="flex flex-col">
 			<div className="flex items-center justify-between px-5 pt-4">
 				<div className="inline-flex items-center gap-x-2">
-					<TbPlaylist className="text-neutral-400" size={26} />
+					<ListMusicIcon size={26} className="size-6 text-neutral-400" />
 
 					<p className="text-neutral-400 font-medium text-md">Your Library</p>
 				</div>
 
-				<AiOutlinePlus
-					onClick={onClick}
+				<PlusIcon
 					size={20}
-					className="text-neutral-400 cursor-pointer hover:text-white transition"
+					onClick={onClick}
+					className="size-5 text-neutral-400 cursor-pointer hover:text-white transition"
 				/>
 			</div>
 
 			<div className="flex flex-col gap-y-2 mt-4 px-3">
-				{songs.map((song) => (
-					<MediaItem onClick={(id: string) => onPlay(id)} key={song.id} data={song} />
+				{tracks.map((track) => (
+					<MediaItem onClick={(id: string) => onPlay(id)} key={track.id} data={track} />
 				))}
 			</div>
 		</div>

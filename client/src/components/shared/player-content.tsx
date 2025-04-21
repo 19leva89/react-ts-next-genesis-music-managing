@@ -6,23 +6,23 @@ import { BsPauseFill, BsPlayFill } from 'react-icons/bs'
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2'
 import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai'
 
-import { Song } from '@/types'
+import { Track } from '@/app/types'
+import { Slider } from '@/components/ui'
 import { usePlayer } from '@/hooks/use-player'
 import { LikeButton, MediaItem } from '@/components/shared'
-import { Slider } from '@/components/shared/slider'
 
 interface Props {
-	song: Song
+	track: Track
 	songUrl: string
 }
 
-export const PlayerContent = ({ song, songUrl }: Props) => {
+export const PlayerContent = ({ track, songUrl }: Props) => {
 	const player = usePlayer()
-	const [volume, setVolume] = useState(0.1)
-	const [isPlaying, setIsPlaying] = useState(false)
+	const [volume, setVolume] = useState<number[]>([0.1])
+	const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
 	const Icon = isPlaying ? BsPauseFill : BsPlayFill
-	const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave
+	const VolumeIcon = volume[0] === 0 ? HiSpeakerXMark : HiSpeakerWave
 
 	const onPlayNext = () => {
 		if (player.ids.length === 0) return
@@ -47,7 +47,7 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 	}
 
 	const [play, { pause, sound }] = useSound(songUrl, {
-		volume: volume,
+		volume: volume[0],
 		onplay: () => setIsPlaying(true),
 		onend: () => {
 			setIsPlaying(false)
@@ -71,17 +71,17 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 	}
 
 	const toggleMute = () => {
-		if (volume === 0) setVolume(1)
-		else setVolume(0)
+		if (volume[0] === 0) setVolume([1])
+		else setVolume([0])
 	}
 
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-3 h-full">
 			<div className="flex w-full justify-start">
 				<div className="flex items-center gap-x-4">
-					<MediaItem data={song} />
+					<MediaItem data={track} />
 
-					<LikeButton songId={song.id} />
+					<LikeButton songId={track.id} />
 				</div>
 			</div>
 
@@ -117,7 +117,7 @@ export const PlayerContent = ({ song, songUrl }: Props) => {
 				<div className="flex items-center gap-x-2 w-[120px]">
 					<VolumeIcon onClick={toggleMute} className="cursor-pointer" size={34} />
 
-					<Slider value={volume} onChange={(value) => setVolume(value)} />
+					<Slider value={volume} onValueChange={(value) => setVolume(value)} max={1} step={0.1} />
 				</div>
 			</div>
 		</div>

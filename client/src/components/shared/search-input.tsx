@@ -3,10 +3,9 @@
 import qs from 'query-string'
 import { useEffect, useState } from 'react'
 
-import { Input } from './input'
-import { useDebounce } from '@/hooks/use-debounce'
-
+import { Input } from '@/components/ui'
 import { useRouter } from 'next/navigation'
+import { useDebounce } from '@/hooks/use-debounce'
 
 export const SearchInput = () => {
 	const router = useRouter()

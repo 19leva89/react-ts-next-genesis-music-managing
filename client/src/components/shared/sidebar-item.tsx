@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { IconType } from 'react-icons'
+import { LucideIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
 interface Props {
-	icon: IconType
+	icon: LucideIcon
 	label: string
 	active?: boolean
 	href: string

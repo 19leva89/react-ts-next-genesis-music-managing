@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'avatars.githubusercontent.com',
+				hostname: 'picsum.photos',
 			},
 		],
 		unoptimized: true,

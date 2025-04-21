@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
-import { useAuthModal } from '@/hooks/use-auth-modal'
-
 interface Props {
 	songId: string
 }
@@ -15,17 +13,16 @@ export const LikeButton = ({ songId }: Props) => {
 	const router = useRouter()
 	// const { supabaseClient } = useSessionContext()
 
-	const authModal = useAuthModal()
 	// const { user } = useUser()
 
-	const [isLiked, setIsLiked] = useState(false)
+	const [isLiked, setIsLiked] = useState<boolean>(false)
 
 	useEffect(() => {
 		// if (!user?.id) return
 
 		const fetchData = async () => {
 			// const { data, error } = await supabaseClient
-			// 	.from('liked_songs')
+			// 	.from('liked_tracks')
 			// 	.select('*')
 			// 	.eq('user_id', user.id)
 			// 	.eq('song_id', songId)
@@ -43,7 +40,7 @@ export const LikeButton = ({ songId }: Props) => {
 
 		// if (isLiked) {
 		// 	const { error } = await supabaseClient
-		// 		.from('liked_songs')
+		// 		.from('liked_tracks')
 		// 		.delete()
 		// 		.eq('user_id', user.id)
 		// 		.eq('song_id', songId)
@@ -55,13 +52,13 @@ export const LikeButton = ({ songId }: Props) => {
 		// 		setIsLiked(false)
 		// 	}
 		// } else {
-		// 	const { error } = await supabaseClient.from('liked_songs').insert({
+		// 	const { error } = await supabaseClient.from('liked_tracks').insert({
 		// 		song_id: songId,
 		// 		user_id: user.id,
 		// 	})
 
 		setIsLiked(true)
-		toast.success('Liked Song!')
+		toast.success('Liked Track!')
 
 		router.refresh()
 	}

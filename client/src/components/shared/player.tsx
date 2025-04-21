@@ -2,20 +2,20 @@
 
 import { usePlayer } from '@/hooks/use-player'
 import { PlayerContent } from '@/components/shared'
-import { useLoadSongUrl } from '@/hooks/use-load-song-url'
-import { useGetSongById } from '@/hooks/use-get-song-by-id'
+import { useLoadTrackUrl } from '@/hooks/use-load-track-url'
+import { useGetSongById } from '@/hooks/use-get-track-by-id'
 
 export const Player = () => {
 	const player = usePlayer()
-	const { song } = useGetSongById(player.activeId)
+	const { track } = useGetSongById(player.activeId)
 
-	const songUrl = useLoadSongUrl(song!)
+	const songUrl = useLoadTrackUrl(track!)
 
-	if (!song || !songUrl || !player.activeId) return null
+	if (!track || !songUrl || !player.activeId) return null
 
 	return (
 		<div className="fixed bottom-0 bg-black w-full py-2 h-[80px] px-4">
-			<PlayerContent key={songUrl} song={song} songUrl={songUrl} />
+			<PlayerContent key={songUrl} track={track} songUrl={songUrl} />
 		</div>
 	)
 }

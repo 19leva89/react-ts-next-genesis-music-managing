@@ -1,148 +1,195 @@
 'use client'
 
-import uniqid from 'uniqid'
 import { toast } from 'sonner'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
-import { Modal } from '@/components/shared/modal'
-import { Input } from '@/components/shared/input'
-import { Button } from '@/components/shared/button'
+import {
+	Button,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	Input,
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui'
+import { Genre } from '@/app/types'
+import { addTrack, getAllGenres } from '@/app/actions'
 import { useUploadModal } from '@/hooks/use-upload-modal'
 
 export const UploadModal = () => {
-	const uploadModal = useUploadModal()
-	const [isLoading, setIsLoading] = useState(false)
-	// const { user } = useUser()
-	// const supabaseClient = useSupabaseClient()
 	const router = useRouter()
+	const uploadModal = useUploadModal()
 
-	const { register, handleSubmit, reset } = useForm<FieldValues>({
+	const [isLoading, setIsLoading] = useState(false)
+	const [selectedGenreId, setSelectedGenreId] = useState('')
+	const [selectedGenres, setSelectedGenres] = useState<Genre[]>([])
+	const [availableGenres, setAvailableGenres] = useState<Genre[]>([])
+
+	const { register, handleSubmit, reset, setValue } = useForm<FieldValues>({
 		defaultValues: {
-			author: '',
 			title: '',
-			song: null,
-			image: null,
+			artist: '',
+			album: '',
+			genres: [],
+			coverImage: '',
 		},
 	})
 
-	const onChange = (open: boolean) => {
-		if (!open) {
-			reset()
-			uploadModal.onClose()
-		}
+	useEffect(() => {
+		getAllGenres()
+			.then(setAvailableGenres)
+			.catch(() => toast.error('Failed to load genres'))
+	}, [])
+
+	const onClose = () => {
+		reset()
+		setSelectedGenres([])
+		uploadModal.onClose()
 	}
 
 	const onSubmit: SubmitHandler<FieldValues> = async (values) => {
 		try {
 			setIsLoading(true)
 
-			const imageFile = values.image?.[0]
-			const songFile = values.song?.[0]
+			await addTrack({
+				title: values.title,
+				artist: values.artist,
+				album: values.album,
+				genres: selectedGenres.map((genre) => genre.id),
+				coverImage: values.coverImage,
+			})
 
-			// if (!imageFile || !songFile || !user) {
-			// 	toast.error('Missing Fields.')
-			// 	return
-			// }
-
-			const uniqueId = uniqid()
-
-			// Upload Song
-			// const { data: songData, error: songError } = await supabaseClient.storage
-			// 	.from('songs')
-			// 	.upload(`song-${values.title}-${uniqueId}`, songFile, {
-			// 		cacheControl: '3600',
-			// 		upsert: false,
-			// 	})
-
-			// if (songError) {
-			// 	setIsLoading(false)
-			// 	return toast.error('Song Upload Failed.')
-			// }
-
-			// Upload Image
-			// const { data: imageData, error: imageError } = await supabaseClient.storage
-			// 	.from('images')
-			// 	.upload(`image-${values.title}-${uniqueId}`, imageFile, {
-			// 		cacheControl: '3600',
-			// 		upsert: false,
-			// 	})
-
-			// if (imageError) {
-			// 	setIsLoading(false)
-			// 	return toast.error('Image Upload Failed.')
-			// }
-
-			// const { error: supabaseError } = await supabaseClient.from('songs').insert({
-			// 	user_id: user.id,
-			// 	title: values.title,
-			// 	author: values.author,
-			// 	image_path: imageData.path,
-			// 	song_path: songData.path,
-			// })
-
-			// if (supabaseError) {
-			// 	setIsLoading(false)
-			// 	return toast.error(supabaseError.message)
-			// }
-
+			toast.success('Track created!')
+			onClose()
 			router.refresh()
-			setIsLoading(false)
-			toast.success('Song Created!')
-			reset()
-			uploadModal.onClose()
-		} catch (error) {
-			toast.error('Something Went Wrong.')
+		} catch (err: any) {
+			toast.error(err.message || 'Something went wrong.')
 		} finally {
 			setIsLoading(false)
 		}
 	}
 
+	const handleAddGenre = (id: string) => {
+		const genre = availableGenres.find((g) => g.id === id)
+		if (!genre || selectedGenres.some((g) => g.id === id)) return
+
+		const updatedGenres = [...selectedGenres, genre]
+		setSelectedGenres(updatedGenres)
+		setSelectedGenreId('')
+		setValue(
+			'genres',
+			updatedGenres.map((g) => g.id),
+		)
+	}
+
+	const removeGenre = (id: string) => {
+		const updatedGenres = selectedGenres.filter((g) => g.id !== id)
+		setSelectedGenres(updatedGenres)
+		setValue(
+			'genres',
+			updatedGenres.map((g) => g.id),
+		)
+	}
+
 	return (
-		<Modal
-			title="Add a Song"
-			description="Upload an MP3 File."
-			isOpen={uploadModal.isOpen}
-			onChange={onChange}
-		>
-			<form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
-				<Input
-					id="title"
-					disabled={isLoading}
-					placeholder="Song Title"
-					{...register('title', { required: true })}
-				/>
-				<Input
-					id="author"
-					disabled={isLoading}
-					placeholder="Author"
-					{...register('author', { required: true })}
-				/>
-				<div>
-					<div className="pb-1">Select a Song File.</div>
+		<Dialog open={uploadModal.isOpen} onOpenChange={(open) => !open && onClose()}>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Create Track</DialogTitle>
+
+					<DialogDescription>Enter track metadata</DialogDescription>
+				</DialogHeader>
+
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
 					<Input
-						id="song"
-						type="file"
+						id="title"
+						placeholder="Track Title"
 						disabled={isLoading}
-						accept=".mp3"
-						{...register('song', { required: true })}
+						{...register('title', { required: true })}
 					/>
-				</div>
-				<div>
-					<div className="pb-1">Select an Image.</div>
+
 					<Input
-						id="image"
-						type="file"
+						id="artist"
+						placeholder="Artist"
 						disabled={isLoading}
-						accept="image/*"
-						{...register('image', { required: true })}
+						{...register('artist', { required: true })}
 					/>
-				</div>
-				<Button disabled={isLoading} type="submit">
-					Create
-				</Button>
-			</form>
-		</Modal>
+
+					<Input id="album" placeholder="Album (optional)" disabled={isLoading} {...register('album')} />
+
+					<Input
+						id="coverImage"
+						placeholder="Cover Image URL"
+						disabled={isLoading}
+						{...register('coverImage', { required: true })}
+					/>
+
+					{/* Genre Input */}
+					<div className="flex items-center gap-2">
+						<Select
+							value={selectedGenreId}
+							onValueChange={(value) => {
+								setSelectedGenreId(value)
+								handleAddGenre(value)
+							}}
+							disabled={isLoading}
+						>
+							<SelectTrigger className="w-full">
+								<SelectValue placeholder="Select genre" />
+							</SelectTrigger>
+
+							<SelectContent>
+								{availableGenres
+									.filter((g) => !selectedGenres.some((sel) => sel.id === g.id))
+									.map((genre) => (
+										<SelectItem key={genre.id} value={genre.id}>
+											{genre.name}
+										</SelectItem>
+									))}
+							</SelectContent>
+						</Select>
+					</div>
+
+					<div className="flex flex-wrap gap-2">
+						{selectedGenres.map((genre) => (
+							<div key={genre.id} className="flex items-center bg-muted px-3 py-1 rounded-full text-sm">
+								<span>{genre.name}</span>
+
+								<button
+									type="button"
+									onClick={() => removeGenre(genre.id)}
+									className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
+								>
+									×
+								</button>
+							</div>
+						))}
+					</div>
+
+					<div>
+						<div className="pb-1 text-sm text-muted-foreground">Select a Track File</div>
+
+						<Input
+							id="track"
+							type="file"
+							accept=".mp3"
+							disabled={isLoading}
+							{...register('track', { required: true })}
+						/>
+					</div>
+
+					<Button variant="default" size="lg" disabled={isLoading} type="submit" className="cursor-pointer">
+						Create
+					</Button>
+				</form>
+			</DialogContent>
+		</Dialog>
 	)
 }

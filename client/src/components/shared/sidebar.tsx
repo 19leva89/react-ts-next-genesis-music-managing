@@ -1,34 +1,33 @@
 'use client'
 
-import { HiHome } from 'react-icons/hi'
-import { BiSearch } from 'react-icons/bi'
 import { ReactNode, useMemo } from 'react'
 import { usePathname } from 'next/navigation'
+import { HouseIcon, SearchIcon } from 'lucide-react'
 
-import { Song } from '@/types'
+import { Track } from '@/app/types'
 import { cn } from '@/lib/utils'
 import { usePlayer } from '@/hooks/use-player'
 import { Box, Library, SidebarItem } from '@/components/shared'
 
 interface Props {
 	children: ReactNode
-	songs: Song[]
+	tracks: Track[]
 }
 
-export const Sidebar = ({ children, songs }: Props) => {
+export const Sidebar = ({ children, tracks }: Props) => {
 	const pathname = usePathname()
 	const player = usePlayer()
 
 	const routes = useMemo(
 		() => [
 			{
-				icon: HiHome,
+				icon: HouseIcon,
 				label: 'Home',
 				active: pathname !== '/search',
 				href: '/',
 			},
 			{
-				icon: BiSearch,
+				icon: SearchIcon,
 				label: 'Search',
 				active: pathname === '/search',
 				href: '/search',
@@ -48,7 +47,7 @@ export const Sidebar = ({ children, songs }: Props) => {
 					</div>
 				</Box>
 				<Box className="overflow-y-auto h-full">
-					<Library songs={songs} />
+					<Library tracks={tracks} />
 				</Box>
 			</div>
 			<main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
