@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { BACKEND_URL } from '@/lib/constants'
+import { BACKEND_API_URL } from '@/lib/constants'
 
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url)
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 	const genre = searchParams.get('genre') ?? ''
 	const artist = searchParams.get('artist') ?? ''
 
-	const url = `${BACKEND_URL}/tracks`
+	const url = `${BACKEND_API_URL}/tracks`
 
 	try {
 		const { data } = await axios.get(url, {
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json()
 
-		const url = `${BACKEND_URL}/tracks`
+		const url = `${BACKEND_API_URL}/tracks`
 
 		const { data } = await axios.post(url, body, {
 			headers: {

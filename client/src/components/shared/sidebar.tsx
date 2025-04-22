@@ -4,8 +4,8 @@ import { ReactNode, useMemo } from 'react'
 import { usePathname } from 'next/navigation'
 import { HouseIcon, SearchIcon } from 'lucide-react'
 
-import { Track } from '@/app/types'
 import { cn } from '@/lib/utils'
+import { Track } from '@/app/types'
 import { usePlayer } from '@/hooks/use-player'
 import { Box, Library, SidebarItem } from '@/components/shared'
 

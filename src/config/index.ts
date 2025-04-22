@@ -25,8 +25,8 @@ dotenvExpand.expand(env)
  */
 const envSchema = z.object({
 	// Server settings
-	PORT: z.string().default('3000').transform(Number),
-	HOST: z.string().default('0.0.0.0'),
+	PORT: z.string().default('8000').transform(Number),
+	HOST: z.string().default('localhost'),
 	NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
 	// File storage settings

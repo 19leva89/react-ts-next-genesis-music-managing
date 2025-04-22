@@ -1,8 +1,7 @@
-import { Header, ListItem } from '@/components/shared'
-
 import { getAllTracks } from '@/app/actions'
-import { PageContent } from './_components/page-content'
+import { Header, ListItem } from '@/components/shared'
 import { TrackFilters } from './_components/track-filters'
+import { TrackListWrapper } from './_components/track-list-wrapper'
 import { PaginationClient } from '@/components/shared/pagination-client'
 
 export const revalidate = 0
@@ -13,16 +12,20 @@ type Props = {
 		sort?: string
 		order?: 'asc' | 'desc'
 		search?: string
+		genre?: string
+		artist?: string
 	}>
 }
 
-async function HomePage({ searchParams }: Props) {
+const HomePage = async ({ searchParams }: Props) => {
 	const params = await searchParams
 
 	const currentPage = Number(params?.page || 1)
 	const sortField = params?.sort || 'createdAt'
 	const sortOrder = params?.order || 'desc'
 	const searchQuery = params?.search || ''
+	const sortGenre = params?.genre || ''
+	const sortArtist = params?.artist || ''
 
 	const { data: tracks, meta } = await getAllTracks({
 		page: currentPage,
@@ -30,6 +33,8 @@ async function HomePage({ searchParams }: Props) {
 		sort: sortField,
 		order: sortOrder,
 		search: searchQuery,
+		genre: sortGenre,
+		artist: sortArtist,
 	})
 
 	return (
@@ -48,13 +53,16 @@ async function HomePage({ searchParams }: Props) {
 				<div className="flex flex-wrap justify-between items-center gap-4">
 					<h1 className="text-white text-2xl font-semibold">Newest Tracks</h1>
 
-					<TrackFilters sortField={sortField} sortOrder={sortOrder} searchQuery={searchQuery} />
+					<TrackFilters
+						sortField={sortField}
+						sortOrder={sortOrder}
+						searchQuery={searchQuery}
+						sortGenre={sortGenre}
+					/>
 				</div>
 			</div>
 
-			<div>
-				<PageContent tracks={tracks} />
-			</div>
+			<TrackListWrapper tracks={tracks} />
 
 			<div className="m-6">
 				<PaginationClient currentPage={meta.page} totalPages={meta.totalPages} />

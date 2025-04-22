@@ -1,19 +1,23 @@
 'use client'
 
-import { FormEvent } from 'react'
+import { FormEvent, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
+import { useGetGenres } from '@/hooks/use-get-genres'
 import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 
 interface Props {
 	sortField: string
 	sortOrder: 'asc' | 'desc'
 	searchQuery: string
+	sortGenre: string
 }
 
-export const TrackFilters = ({ sortField, sortOrder, searchQuery }: Props) => {
+export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: Props) => {
 	const router = useRouter()
 	const params = useSearchParams()
+
+	const { genres: availableGenres, loadGenres } = useGetGenres()
 
 	const updateSearchParams = (newParams: Partial<Record<string, string>>) => {
 		const updatedParams = new URLSearchParams(params.toString())
@@ -38,6 +42,16 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery }: Props) => {
 		updateSearchParams({ search })
 	}
 
+	useEffect(() => {
+		if (sortGenre && sortGenre !== 'genre') {
+			updateSearchParams({ genre: sortGenre })
+		}
+	}, [sortGenre])
+
+	useEffect(() => {
+		loadGenres()
+	}, [])
+
 	return (
 		<div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto text-white">
 			<div className="flex gap-3">
@@ -48,9 +62,30 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery }: Props) => {
 					</SelectTrigger>
 
 					<SelectContent>
-						<SelectItem value="createdAt">Date added</SelectItem>
 						<SelectItem value="title">Title</SelectItem>
 						<SelectItem value="artist">Artist</SelectItem>
+						<SelectItem value="album">Album</SelectItem>
+						<SelectItem value="createdAt">Date added</SelectItem>
+					</SelectContent>
+				</Select>
+
+				{/* Genre filter */}
+				<Select
+					value={sortGenre}
+					onValueChange={(value) => updateSearchParams({ genre: value === 'all' ? undefined : value })}
+				>
+					<SelectTrigger className="w-[180px]">
+						<SelectValue placeholder="Select genre" />
+					</SelectTrigger>
+
+					<SelectContent>
+						<SelectItem value="all">All genres</SelectItem>
+
+						{availableGenres.map((genre) => (
+							<SelectItem key={genre} value={genre}>
+								{genre}
+							</SelectItem>
+						))}
 					</SelectContent>
 				</Select>
 

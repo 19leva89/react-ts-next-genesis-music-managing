@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { BACKEND_URL } from '@/lib/constants'
+import { BACKEND_API_URL } from '@/lib/constants'
 
 export async function GET(req: NextRequest) {
 	try {
-		const response = await axios.get(`${BACKEND_URL}/genres`, {
+		const response = await axios.get(`${BACKEND_API_URL}/genres`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},

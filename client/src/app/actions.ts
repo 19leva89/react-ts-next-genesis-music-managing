@@ -1,16 +1,11 @@
 import { request } from '@/lib/api'
-import type { AddTrackInput, Genre, GetAllTracksParams, Track } from '@/app/types'
+import type { AddTrackInput, GetAllTracksParams, Track } from '@/app/types'
 
-export const getAllGenres = async (): Promise<Genre[]> => {
-	const response = await request<string[]>({
+export const getAllGenres = async (): Promise<string[]> => {
+	return await request<string[]>({
 		url: '/api/genres',
 		method: 'GET',
 	})
-
-	return response.map((name) => ({
-		id: name.toLowerCase().replace(/\s+/g, '-'),
-		name,
-	}))
 }
 
 export const getAllTracks = async ({
@@ -45,9 +40,53 @@ export const addTrack = async (input: AddTrackInput): Promise<Track> => {
 	})
 }
 
+export const updateTrackById = async (id: string, input: Partial<AddTrackInput>): Promise<Track> => {
+	return await request<Track>({
+		url: `/api/tracks/${id}`,
+		method: 'PUT',
+		data: input,
+	})
+}
+
 export const removeTrack = async (id: string): Promise<void> => {
 	await request({
 		url: `/api/tracks/${id}`,
 		method: 'DELETE',
+	})
+}
+
+export const removeTracks = async (ids: string[]): Promise<void> => {
+	await request({
+		url: '/api/tracks/delete',
+		method: 'POST',
+		data: { ids },
+	})
+}
+
+export const uploadTrackFile = async (id: string, file: File): Promise<void> => {
+	const formData = new FormData()
+	formData.append('file', file)
+
+	await request({
+		url: `/api/tracks/${id}/upload`,
+		method: 'POST',
+		data: formData,
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	})
+}
+
+export const deleteTrackFile = async (id: string, file: File): Promise<void> => {
+	const formData = new FormData()
+	formData.append('file', file)
+
+	await request({
+		url: `/api/tracks/${id}/file`,
+		method: 'DELETE',
+		data: formData,
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
 	})
 }

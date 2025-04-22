@@ -2,8 +2,8 @@
 
 import { usePlayer } from '@/hooks/use-player'
 import { PlayerContent } from '@/components/shared'
-import { useLoadTrackUrl } from '@/hooks/use-load-track-url'
 import { useGetSongById } from '@/hooks/use-get-track-by-id'
+import { useLoadTrackUrl } from '@/hooks/use-load-track-url'
 
 export const Player = () => {
 	const player = usePlayer()

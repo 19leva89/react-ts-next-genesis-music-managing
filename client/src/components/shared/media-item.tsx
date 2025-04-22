@@ -12,7 +12,6 @@ interface Props {
 
 export const MediaItem = ({ data, onClick }: Props) => {
 	const player = usePlayer()
-	// const imageUrl = useLoadImage(data)
 
 	const handleClick = () => {
 		if (onClick) return onClick(data.id)

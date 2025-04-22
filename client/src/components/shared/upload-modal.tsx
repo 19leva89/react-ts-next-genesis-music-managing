@@ -1,8 +1,8 @@
 'use client'
 
 import { toast } from 'sonner'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -19,18 +19,19 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui'
-import { Genre } from '@/app/types'
-import { addTrack, getAllGenres } from '@/app/actions'
+import { addTrack } from '@/app/actions'
+import { useGetGenres } from '@/hooks/use-get-genres'
 import { useUploadModal } from '@/hooks/use-upload-modal'
 
 export const UploadModal = () => {
 	const router = useRouter()
 	const uploadModal = useUploadModal()
 
-	const [isLoading, setIsLoading] = useState(false)
-	const [selectedGenreId, setSelectedGenreId] = useState('')
-	const [selectedGenres, setSelectedGenres] = useState<Genre[]>([])
-	const [availableGenres, setAvailableGenres] = useState<Genre[]>([])
+	const { genres: availableGenres } = useGetGenres()
+
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [selectedGenres, setSelectedGenres] = useState<string[]>([])
+	const [selectedGenreId, setSelectedGenreId] = useState<string>('')
 
 	const { register, handleSubmit, reset, setValue } = useForm<FieldValues>({
 		defaultValues: {
@@ -42,27 +43,40 @@ export const UploadModal = () => {
 		},
 	})
 
-	useEffect(() => {
-		getAllGenres()
-			.then(setAvailableGenres)
-			.catch(() => toast.error('Failed to load genres'))
-	}, [])
-
 	const onClose = () => {
 		reset()
 		setSelectedGenres([])
 		uploadModal.onClose()
 	}
 
-	const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+	const isValidImageUrl = async (url: string): Promise<boolean> => {
+		if (!url) return true
+
+		return new Promise((resolve) => {
+			const img = new Image()
+			img.onload = () => resolve(true)
+			img.onerror = () => resolve(false)
+			img.src = url
+		})
+	}
+
+	const onValid: SubmitHandler<FieldValues> = async (values) => {
 		try {
 			setIsLoading(true)
+
+			const isImageOk = await isValidImageUrl(values.coverImage)
+			if (!isImageOk) {
+				toast.error('Invalid image URL')
+
+				setIsLoading(false)
+				return
+			}
 
 			await addTrack({
 				title: values.title,
 				artist: values.artist,
 				album: values.album,
-				genres: selectedGenres.map((genre) => genre.id),
+				genres: selectedGenres,
 				coverImage: values.coverImage,
 			})
 
@@ -70,47 +84,49 @@ export const UploadModal = () => {
 			onClose()
 			router.refresh()
 		} catch (err: any) {
-			toast.error(err.message || 'Something went wrong.')
+			toast.error(err.message || 'Something went wrong')
 		} finally {
 			setIsLoading(false)
 		}
 	}
 
-	const handleAddGenre = (id: string) => {
-		const genre = availableGenres.find((g) => g.id === id)
-		if (!genre || selectedGenres.some((g) => g.id === id)) return
+	const onInvalid = (errors: any) => {
+		if (errors.title) toast.error('Title is required')
 
-		const updatedGenres = [...selectedGenres, genre]
-		setSelectedGenres(updatedGenres)
-		setSelectedGenreId('')
-		setValue(
-			'genres',
-			updatedGenres.map((g) => g.id),
-		)
+		if (errors.artist) toast.error('Artist is required')
+
+		if (errors.coverImage) toast.error(errors.coverImage.message)
 	}
 
-	const removeGenre = (id: string) => {
-		const updatedGenres = selectedGenres.filter((g) => g.id !== id)
-		setSelectedGenres(updatedGenres)
-		setValue(
-			'genres',
-			updatedGenres.map((g) => g.id),
-		)
+	const handleAddGenre = (genre: string) => {
+		if (selectedGenres.includes(genre)) return
+		const updated = [...selectedGenres, genre]
+
+		setSelectedGenres(updated)
+		setSelectedGenreId('')
+		setValue('genres', updated)
+	}
+
+	const removeGenre = (genre: string) => {
+		const updated = selectedGenres.filter((g) => g !== genre)
+
+		setSelectedGenres(updated)
+		setValue('genres', updated)
 	}
 
 	return (
 		<Dialog open={uploadModal.isOpen} onOpenChange={(open) => !open && onClose()}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Create Track</DialogTitle>
+					<DialogTitle>Create track</DialogTitle>
 
 					<DialogDescription>Enter track metadata</DialogDescription>
 				</DialogHeader>
 
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
+				<form onSubmit={handleSubmit(onValid, onInvalid)} className="flex flex-col gap-y-4">
 					<Input
 						id="title"
-						placeholder="Track Title"
+						placeholder="Title"
 						disabled={isLoading}
 						{...register('title', { required: true })}
 					/>
@@ -126,9 +142,9 @@ export const UploadModal = () => {
 
 					<Input
 						id="coverImage"
-						placeholder="Cover Image URL"
+						placeholder="Cover image URL (optional)"
 						disabled={isLoading}
-						{...register('coverImage', { required: true })}
+						{...register('coverImage')}
 					/>
 
 					{/* Genre Input */}
@@ -142,15 +158,15 @@ export const UploadModal = () => {
 							disabled={isLoading}
 						>
 							<SelectTrigger className="w-full">
-								<SelectValue placeholder="Select genre" />
+								<SelectValue placeholder="Select genre (optional)" />
 							</SelectTrigger>
 
 							<SelectContent>
 								{availableGenres
-									.filter((g) => !selectedGenres.some((sel) => sel.id === g.id))
+									.filter((g) => !selectedGenres.includes(g))
 									.map((genre) => (
-										<SelectItem key={genre.id} value={genre.id}>
-											{genre.name}
+										<SelectItem key={genre} value={genre}>
+											{genre}
 										</SelectItem>
 									))}
 							</SelectContent>
@@ -159,30 +175,18 @@ export const UploadModal = () => {
 
 					<div className="flex flex-wrap gap-2">
 						{selectedGenres.map((genre) => (
-							<div key={genre.id} className="flex items-center bg-muted px-3 py-1 rounded-full text-sm">
-								<span>{genre.name}</span>
+							<div key={genre} className="flex items-center bg-muted px-3 py-1 rounded-full text-sm">
+								<span>{genre}</span>
 
 								<button
 									type="button"
-									onClick={() => removeGenre(genre.id)}
+									onClick={() => removeGenre(genre)}
 									className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
 								>
 									×
 								</button>
 							</div>
 						))}
-					</div>
-
-					<div>
-						<div className="pb-1 text-sm text-muted-foreground">Select a Track File</div>
-
-						<Input
-							id="track"
-							type="file"
-							accept=".mp3"
-							disabled={isLoading}
-							{...register('track', { required: true })}
-						/>
 					</div>
 
 					<Button variant="default" size="lg" disabled={isLoading} type="submit" className="cursor-pointer">

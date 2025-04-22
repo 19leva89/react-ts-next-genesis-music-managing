@@ -1,8 +1,3 @@
-export type Genre = {
-	id: string
-	name: string
-}
-
 export interface Track {
 	id: string
 	title: string

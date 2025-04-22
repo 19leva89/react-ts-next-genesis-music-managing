@@ -26,14 +26,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 		order: 'asc',
 	})
 
-	// const products = await getActiveProductsWithPrices()
-
 	return (
 		<html lang="en">
 			<body className={font.className}>
 				<Toaster position="bottom-right" expand={false} richColors />
 
-				<ModalProvider products={[]} />
+				<ModalProvider />
 
 				<Sidebar tracks={tracks}>{children}</Sidebar>
 

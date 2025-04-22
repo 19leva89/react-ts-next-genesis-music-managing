@@ -9,7 +9,7 @@ import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai'
 import { Track } from '@/app/types'
 import { Slider } from '@/components/ui'
 import { usePlayer } from '@/hooks/use-player'
-import { LikeButton, MediaItem } from '@/components/shared'
+import { MediaItem } from '@/components/shared'
 
 interface Props {
 	track: Track
@@ -80,8 +80,6 @@ export const PlayerContent = ({ track, songUrl }: Props) => {
 			<div className="flex w-full justify-start">
 				<div className="flex items-center gap-x-4">
 					<MediaItem data={track} />
-
-					<LikeButton songId={track.id} />
 				</div>
 			</div>
 
