@@ -40,6 +40,13 @@ export const addTrack = async (input: AddTrackInput): Promise<Track> => {
 	})
 }
 
+export const getTrackById = async (id: string): Promise<Track> => {
+	return await request<Track>({
+		url: `/api/tracks/${id}`,
+		method: 'GET',
+	})
+}
+
 export const updateTrackById = async (id: string, input: Partial<AddTrackInput>): Promise<Track> => {
 	return await request<Track>({
 		url: `/api/tracks/${id}`,

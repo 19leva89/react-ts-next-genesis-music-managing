@@ -3,7 +3,6 @@
 import Image from 'next/image'
 
 import { Track } from '@/app/types'
-import { usePlayer } from '@/hooks/use-player'
 
 interface Props {
 	data: Track
@@ -11,13 +10,7 @@ interface Props {
 }
 
 export const MediaItem = ({ data, onClick }: Props) => {
-	const player = usePlayer()
-
-	const handleClick = () => {
-		if (onClick) return onClick(data.id)
-
-		return player.setId(data.id)
-	}
+	const handleClick = () => {}
 
 	return (
 		<div

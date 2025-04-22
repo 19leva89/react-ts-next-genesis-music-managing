@@ -6,7 +6,6 @@ import { ChevronLeftIcon, ChevronRightIcon, HouseIcon, SearchIcon } from 'lucide
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui'
-import { usePlayer } from '@/hooks/use-player'
 
 interface Props {
 	children: ReactNode
@@ -14,8 +13,6 @@ interface Props {
 }
 
 export const Header = ({ children, className }: Props) => {
-	const player = usePlayer()
-
 	const router = useRouter()
 
 	return (

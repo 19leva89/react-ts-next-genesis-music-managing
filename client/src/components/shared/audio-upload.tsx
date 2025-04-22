@@ -4,8 +4,8 @@ import { toast } from 'sonner'
 import { Trash2Icon, UploadIcon } from 'lucide-react'
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { BACKEND_URL } from '@/lib/constants'
 import { Button, Input } from '@/components/ui'
+import { BACKEND_API_URL } from '@/lib/constants'
 import { deleteTrackFile, uploadTrackFile } from '@/app/actions'
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024 // 20MB
@@ -23,7 +23,7 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 
 	useEffect(() => {
 		if (initialAudioUrl) {
-			const fullUrl = `${BACKEND_URL}/uploads/${initialAudioUrl}`
+			const fullUrl = `${BACKEND_API_URL}/files/${initialAudioUrl}`
 
 			setAudioUrl(fullUrl)
 		}

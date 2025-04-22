@@ -14,10 +14,10 @@ export const TrackListWrapper = ({ tracks }: Props) => {
 		useTrackSelection()
 
 	return (
-		<>
+		<div className="flex flex-col gap-4 mx-6">
 			<PageContent tracks={tracks} isSelecting={isSelecting} isSelected={isSelected} onSelect={toggleTrack} />
 
-			<div className="flex items-center gap-x-2 mb-4">
+			<div className="flex items-center gap-2">
 				<BulkDelete
 					allTrackIds={tracks.map((t) => t.id)}
 					selectedIds={selectedIds}
@@ -27,6 +27,6 @@ export const TrackListWrapper = ({ tracks }: Props) => {
 					isSelecting={isSelecting}
 				/>
 			</div>
-		</>
+		</div>
 	)
 }

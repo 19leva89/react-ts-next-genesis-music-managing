@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 export const useTrackSelection = () => {
-	const [isSelecting, setIsSelecting] = useState(false)
 	const [selectedIds, setSelectedIds] = useState<string[]>([])
+	const [isSelecting, setIsSelecting] = useState<boolean>(false)
 
 	const toggleSelecting = () => setIsSelecting((prev) => !prev)
 

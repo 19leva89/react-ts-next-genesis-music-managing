@@ -1,22 +1,34 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Track } from '@/app/types'
+import { getTrackById } from '@/app/actions'
 
-export const useGetSongById = (id?: string) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [track, setSong] = useState<Track | undefined>(undefined)
+export const useGetTrackById = (id: string) => {
+	const [track, setTrack] = useState<Track | null>(null)
+	const [error, setError] = useState<string | null>(null)
+	const [isLoading, setIsLoading] = useState<boolean>(true)
 
 	useEffect(() => {
-		if (!id) return
+		const fetchTrack = async () => {
+			try {
+				setIsLoading(true)
+				setError(null)
 
-		setIsLoading(true)
+				const fetchedTrack = await getTrackById(id)
+				setTrack(fetchedTrack)
+			} catch (error) {
+				console.error('Error fetching track:', error)
 
-		const fetchSong = async () => {
-			setIsLoading(false)
+				setError('Failed to fetch track')
+			} finally {
+				setIsLoading(false)
+			}
 		}
 
-		fetchSong()
+		if (id) {
+			fetchTrack()
+		}
 	}, [id])
 
-	return useMemo(() => ({ isLoading, track }), [isLoading, track])
+	return { track, isLoading, error }
 }

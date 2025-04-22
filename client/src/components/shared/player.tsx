@@ -1,21 +1,47 @@
 'use client'
 
-import { usePlayer } from '@/hooks/use-player'
-import { PlayerContent } from '@/components/shared'
-import { useGetSongById } from '@/hooks/use-get-track-by-id'
-import { useLoadTrackUrl } from '@/hooks/use-load-track-url'
+import Image from 'next/image'
 
-export const Player = () => {
-	const player = usePlayer()
-	const { track } = useGetSongById(player.activeId)
+import { Track } from '@/app/types'
+import { Wavesurfer } from '@/components/shared'
+import { BACKEND_API_URL } from '@/lib/constants'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui'
 
-	const songUrl = useLoadTrackUrl(track!)
+interface Props {
+	track: Track
+	isOpen: boolean
+	onClose: () => void
+}
 
-	if (!track || !songUrl || !player.activeId) return null
+export const Player = ({ track, isOpen, onClose }: Props) => {
+	const fullUrl = `${BACKEND_API_URL}/files/${track.audioFile}`
 
 	return (
-		<div className="fixed bottom-0 bg-black w-full py-2 h-[80px] px-4">
-			<PlayerContent key={songUrl} track={track} songUrl={songUrl} />
-		</div>
+		<Dialog open={isOpen} onOpenChange={onClose}>
+			<DialogContent className="sm:max-w-[425px]">
+				<div className="flex flex-col items-center gap-4">
+					<div className="relative w-64 h-64">
+						<Image
+							src={track.coverImage || '/img/no-cover-image.png'}
+							alt="Album Artwork"
+							fill
+							className="object-cover rounded-lg"
+						/>
+					</div>
+
+					<div className="text-center">
+						<DialogTitle className="text-lg font-semibold">{track.title}</DialogTitle>
+
+						<DialogDescription className="text-sm text-muted-foreground">{track.artist}</DialogDescription>
+					</div>
+
+					{track.audioFile ? (
+						<Wavesurfer audioUrl={fullUrl} />
+					) : (
+						<p className="text-sm text-muted-foreground">No audio file found</p>
+					)}
+				</div>
+			</DialogContent>
+		</Dialog>
 	)
 }

@@ -4,7 +4,6 @@ import { ListMusicIcon, PlusIcon } from 'lucide-react'
 
 import { Track } from '@/app/types'
 import { MediaItem } from '@/components/shared'
-import { useOnPlay } from '@/hooks/use-on-play'
 import { useUploadModal } from '@/hooks/use-upload-modal'
 
 interface Props {
@@ -13,8 +12,6 @@ interface Props {
 
 export const Library = ({ tracks }: Props) => {
 	const uploadModal = useUploadModal()
-
-	const onPlay = useOnPlay(tracks)
 
 	const onClick = () => {
 		return uploadModal.onOpen()
@@ -38,7 +35,7 @@ export const Library = ({ tracks }: Props) => {
 
 			<div className="flex flex-col gap-y-2 mt-4 px-3">
 				{tracks.map((track) => (
-					<MediaItem onClick={(id: string) => onPlay(id)} key={track.id} data={track} />
+					<MediaItem onClick={() => {}} key={track.id} data={track} />
 				))}
 			</div>
 		</div>

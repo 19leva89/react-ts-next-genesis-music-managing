@@ -4,7 +4,7 @@ import { Figtree } from 'next/font/google'
 
 import { Toaster } from '@/components/ui'
 import { getAllTracks } from '@/app/actions'
-import { Player, Sidebar } from '@/components/shared'
+import { Sidebar } from '@/components/shared'
 import { ModalProvider } from '@/components/shared/providers'
 
 import './globals.css'
@@ -34,8 +34,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 				<ModalProvider />
 
 				<Sidebar tracks={tracks}>{children}</Sidebar>
-
-				<Player />
 			</body>
 		</html>
 	)

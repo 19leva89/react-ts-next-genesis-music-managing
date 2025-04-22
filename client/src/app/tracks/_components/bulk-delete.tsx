@@ -36,14 +36,20 @@ export const BulkDelete = ({
 	}
 
 	return (
-		<div>
-			<Button onClick={toggleSelecting}>{isSelecting ? 'Cancel' : 'Select for Bulk Delete'}</Button>
+		<div className="flex items-center gap-2">
+			<Button variant="default" onClick={toggleSelecting}>
+				{isSelecting ? 'Cancel' : 'Click for Bulk Delete'}
+			</Button>
 
 			{isSelecting && (
 				<>
-					<Button onClick={handleSelectAll}>Select All</Button>
+					<Button variant="secondary" onClick={handleSelectAll}>
+						Select All
+					</Button>
 
-					<Button onClick={handleDelete}>Delete Selected</Button>
+					<Button variant="destructive" onClick={handleDelete}>
+						Delete Selected
+					</Button>
 				</>
 			)}
 		</div>

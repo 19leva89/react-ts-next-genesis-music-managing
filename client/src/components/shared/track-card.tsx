@@ -18,15 +18,15 @@ import {
 	CardDescription,
 } from '@/components/ui'
 import { Track } from '@/app/types'
-import { DeleteTrack, EditTrack, PlayButton } from '@/components/shared'
+import { DeleteTrack, EditTrack, PlayButton, Player } from '@/components/shared'
 
 interface Props {
 	data: Track
-	onClick: (id: string) => void
 }
 
-export const TrackCard = ({ data, onClick }: Props) => {
+export const TrackCard = ({ data }: Props) => {
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+	const [isPlayerOpen, setIsPlayerOpen] = useState<boolean>(false)
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false)
 
 	return (
@@ -71,7 +71,7 @@ export const TrackCard = ({ data, onClick }: Props) => {
 			</CardContent>
 
 			<CardFooter className="absolute bottom-5 right-0 z-10">
-				<PlayButton />
+				<PlayButton onClick={() => setIsPlayerOpen(true)} />
 			</CardFooter>
 
 			{/* Edit Dialog */}
@@ -79,6 +79,9 @@ export const TrackCard = ({ data, onClick }: Props) => {
 
 			{/* Delete Dialog */}
 			<DeleteTrack track={data} isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} />
+
+			{/* Player Dialog */}
+			<Player track={data} isOpen={isPlayerOpen} onClose={() => setIsPlayerOpen(false)} />
 		</Card>
 	)
 }

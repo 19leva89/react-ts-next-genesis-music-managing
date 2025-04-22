@@ -7,6 +7,26 @@ interface Props {
 	params: Promise<{ id: string }>
 }
 
+export async function GET(req: NextRequest, { params }: Props) {
+	try {
+		const { id } = await params
+
+		if (!id) {
+			return NextResponse.json({ error: 'Track slug is required' }, { status: 400 })
+		}
+
+		const url = `${BACKEND_API_URL}/tracks/${id}`
+
+		const { data } = await axios.get(url)
+
+		return NextResponse.json(data)
+	} catch (error: any) {
+		const message = error.response?.data || error.message || 'Internal Server Error'
+		const status = error.response?.status || 500
+		return NextResponse.json({ error: message }, { status })
+	}
+}
+
 export async function PUT(req: NextRequest, { params }: Props) {
 	try {
 		const { id } = await params
