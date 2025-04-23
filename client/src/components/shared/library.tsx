@@ -30,6 +30,7 @@ export const Library = ({ tracks }: Props) => {
 					size={20}
 					onClick={onClick}
 					className="size-5 text-neutral-400 cursor-pointer hover:text-white transition"
+					data-testid="create-track-button"
 				/>
 			</div>
 

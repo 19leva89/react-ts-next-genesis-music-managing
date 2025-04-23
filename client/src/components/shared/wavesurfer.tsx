@@ -72,14 +72,20 @@ export const Wavesurfer = ({ audioUrl }: Props) => {
 
 	return (
 		<div className="flex flex-col w-screen items-center rounded-xl">
-			<div ref={waveformRef} className="w-3/4 mb-2" />
+			<div ref={waveformRef} className="w-3/4 mb-2" data-testid="audio-progress" />
 
 			<div className="flex gap-4">
 				<Button variant="ghost" size="icon" onClick={handleSkipBack} className="text-white">
 					<SkipBackIcon className="size-6" />
 				</Button>
 
-				<Button variant="ghost" size="icon" onClick={handlePlayPause} className="bg-[#f90] text-white">
+				<Button
+					variant="ghost"
+					size="icon"
+					onClick={handlePlayPause}
+					className="bg-[#f90] text-white"
+					data-testid={`play-button-${audioUrl}`}
+				>
 					{isPlaying ? <PauseIcon className="size-6" /> : <PlayIcon className="size-6" />}
 				</Button>
 

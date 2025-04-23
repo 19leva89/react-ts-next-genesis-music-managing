@@ -28,11 +28,11 @@ export function PaginationClient({ currentPage, totalPages }: Props) {
 	if (totalPages <= 1) return null
 
 	return (
-		<Pagination>
+		<Pagination data-testid="pagination">
 			<PaginationContent>
 				{currentPage > 1 && (
 					<PaginationItem className="rounded-md bg-neutral-700">
-						<PaginationPrevious href={createPageLink(currentPage - 1)} />
+						<PaginationPrevious href={createPageLink(currentPage - 1)} data-testid="pagination-prev" />
 					</PaginationItem>
 				)}
 
@@ -51,7 +51,11 @@ export function PaginationClient({ currentPage, totalPages }: Props) {
 
 					return (
 						<PaginationItem key={pageNumber} className="rounded-md bg-neutral-700">
-							<PaginationLink href={createPageLink(pageNumber)} isActive={currentPage === pageNumber}>
+							<PaginationLink
+								href={createPageLink(pageNumber)}
+								isActive={currentPage === pageNumber}
+								data-testid={`pagination-page-${pageNumber}`}
+							>
 								{pageNumber}
 							</PaginationLink>
 						</PaginationItem>
@@ -60,7 +64,7 @@ export function PaginationClient({ currentPage, totalPages }: Props) {
 
 				{currentPage < totalPages && (
 					<PaginationItem className="rounded-md bg-neutral-700">
-						<PaginationNext href={createPageLink(currentPage + 1)} />
+						<PaginationNext href={createPageLink(currentPage + 1)} data-testid="pagination-next" />
 					</PaginationItem>
 				)}
 			</PaginationContent>

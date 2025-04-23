@@ -123,12 +123,17 @@ export const UploadModal = () => {
 					<DialogDescription>Enter track metadata</DialogDescription>
 				</DialogHeader>
 
-				<form onSubmit={handleSubmit(onValid, onInvalid)} className="flex flex-col gap-y-4">
+				<form
+					onSubmit={handleSubmit(onValid, onInvalid)}
+					className="flex flex-col gap-y-4"
+					data-testid="track-form"
+				>
 					<Input
 						id="title"
 						placeholder="Title"
 						disabled={isLoading}
 						{...register('title', { required: true })}
+						data-testid="input-title"
 					/>
 
 					<Input
@@ -136,15 +141,23 @@ export const UploadModal = () => {
 						placeholder="Artist"
 						disabled={isLoading}
 						{...register('artist', { required: true })}
+						data-testid="input-artist"
 					/>
 
-					<Input id="album" placeholder="Album (optional)" disabled={isLoading} {...register('album')} />
+					<Input
+						id="album"
+						placeholder="Album (optional)"
+						disabled={isLoading}
+						{...register('album')}
+						data-testid="input-album"
+					/>
 
 					<Input
 						id="coverImage"
 						placeholder="Cover image URL (optional)"
 						disabled={isLoading}
 						{...register('coverImage')}
+						data-testid="input-cover-image"
 					/>
 
 					{/* Genre Input */}
@@ -156,6 +169,7 @@ export const UploadModal = () => {
 								handleAddGenre(value)
 							}}
 							disabled={isLoading}
+							data-testid="genre-selector"
 						>
 							<SelectTrigger className="w-full">
 								<SelectValue placeholder="Select genre (optional)" />
@@ -189,7 +203,14 @@ export const UploadModal = () => {
 						))}
 					</div>
 
-					<Button variant="default" size="lg" disabled={isLoading} type="submit" className="cursor-pointer">
+					<Button
+						variant="default"
+						size="lg"
+						disabled={isLoading}
+						type="submit"
+						className="cursor-pointer"
+						data-testid="submit-button"
+					>
 						Create
 					</Button>
 				</form>

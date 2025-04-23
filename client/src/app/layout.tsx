@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<Toaster position="bottom-right" expand={false} richColors />
+				<Toaster position="bottom-right" expand={false} richColors data-testid="toast-container" />
 
 				<ModalProvider />
 

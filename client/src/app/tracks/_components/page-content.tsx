@@ -23,10 +23,15 @@ export const PageContent = ({ tracks, isSelecting, isSelected, onSelect }: Props
 				<div
 					key={track.id}
 					className={cn(isSelecting && 'relative border border-white/10 p-4 rounded-lg bg-neutral-800/10')}
+					data-testid={`track-item-${track.id}`}
 				>
 					{isSelecting && (
 						<div className="absolute top-2 left-2">
-							<Checkbox checked={isSelected?.(track.id)} onCheckedChange={() => onSelect?.(track.id)} />
+							<Checkbox
+								checked={isSelected?.(track.id)}
+								onCheckedChange={() => onSelect?.(track.id)}
+								data-testid={`track-checkbox-${track.id}`}
+							/>
 						</div>
 					)}
 

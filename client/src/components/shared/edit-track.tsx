@@ -136,12 +136,17 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 					<DialogDescription>Update values of {track.title} in your library</DialogDescription>
 				</DialogHeader>
 
-				<form onSubmit={handleSubmit(onValid, onInvalid)} className="flex flex-col gap-y-4">
+				<form
+					onSubmit={handleSubmit(onValid, onInvalid)}
+					className="flex flex-col gap-y-4"
+					data-testid="track-form"
+				>
 					<Input
 						id="title"
 						placeholder="Title"
 						disabled={isLoading}
 						{...register('title', { required: true })}
+						data-testid="input-title"
 					/>
 
 					<Input
@@ -149,19 +154,27 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 						placeholder="Artist"
 						disabled={isLoading}
 						{...register('artist', { required: true })}
+						data-testid="input-artist"
 					/>
 
-					<Input id="album" placeholder="Album (optional)" disabled={isLoading} {...register('album')} />
+					<Input
+						id="album"
+						placeholder="Album (optional)"
+						disabled={isLoading}
+						{...register('album')}
+						data-testid="input-album"
+					/>
 
 					<Input
 						id="coverImage"
 						placeholder="Cover image URL (optional)"
 						disabled={isLoading}
 						{...register('coverImage')}
+						data-testid="input-cover-image"
 					/>
 
 					{/* Genre Input */}
-					<div className="flex items-center gap-2">
+					<div className="flex items-center gap-2" data-testid="genre-selector">
 						<Select
 							value={selectedGenreId}
 							onValueChange={(value) => {
@@ -205,7 +218,14 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 					{/* Audio File Upload */}
 					<AudioUpload trackId={track.id} initialAudioUrl={track.audioFile} disabled={isLoading} />
 
-					<Button variant="default" size="lg" disabled={isLoading} type="submit" className="cursor-pointer">
+					<Button
+						variant="default"
+						size="lg"
+						disabled={isLoading}
+						type="submit"
+						className="cursor-pointer"
+						data-testid="submit-button"
+					>
 						Save changes
 					</Button>
 				</form>

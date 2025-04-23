@@ -22,12 +22,15 @@ export const ListItem = ({ href, image, name }: Props) => {
 		<div
 			onClick={onClick}
 			className="relative group flex items-center gap-x-4 pr-4 rounded-md overflow-hidden bg-neutral-100/10 hover:bg-neutral-100/20 transition"
+			data-testid="track-item-{id}"
 		>
 			<div className="relative min-h-[64px] min-w-[64px]">
 				<Image src={image} alt="LikeImage" className="object-cover" fill />
 			</div>
 
-			<p className="py-5 font-medium truncate">{name}</p>
+			<p className="py-5 font-medium truncate" data-testid={`track-item-${name}-title`}>
+				{name}
+			</p>
 
 			<PlayButton />
 		</div>

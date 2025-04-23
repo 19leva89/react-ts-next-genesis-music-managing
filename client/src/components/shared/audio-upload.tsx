@@ -86,9 +86,15 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 
 			{audioUrl && (
 				<div className="flex items-center gap-2">
-					<audio controls src={audioUrl} className="w-full" />
+					<audio controls src={audioUrl} className="w-full" data-testid={`audio-player-${trackId}`} />
 
-					<Button variant="destructive" type="button" onClick={handleRemoveAudio} className="w-fit">
+					<Button
+						variant="destructive"
+						type="button"
+						onClick={handleRemoveAudio}
+						className="w-fit"
+						data-testid={`delete-track-${trackId}`}
+					>
 						<Trash2Icon className="size-4" />
 					</Button>
 				</div>
@@ -96,7 +102,14 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 
 			{!audioUrl && (
 				<div className="flex gap-2">
-					<Input id="track" type="file" accept=".mp3, .wav" disabled={disabled} onChange={handleChange} />
+					<Input
+						id="track"
+						type="file"
+						accept=".mp3, .wav"
+						disabled={disabled}
+						onChange={handleChange}
+						data-testid={`upload-input-${trackId}`}
+					/>
 
 					{audioFile && (
 						<Button
@@ -105,6 +118,7 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 							onClick={handleUpload}
 							disabled={disabled}
 							className="w-fit"
+							data-testid={`upload-track-${trackId}`}
 						>
 							<UploadIcon className="size-4 mr-2" />
 							Upload audio

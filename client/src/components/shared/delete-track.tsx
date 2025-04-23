@@ -39,7 +39,7 @@ export const DeleteTrack = ({ track, isOpen, onClose }: Props) => {
 
 	return (
 		<AlertDialog open={isOpen} onOpenChange={onClose}>
-			<AlertDialogContent className="px-8 rounded-xl">
+			<AlertDialogContent className="px-8 rounded-xl" data-testid="confirm-dialog">
 				<AlertDialogHeader>
 					<AlertDialogTitle>Delete {track.title}?</AlertDialogTitle>
 
@@ -49,9 +49,11 @@ export const DeleteTrack = ({ track, isOpen, onClose }: Props) => {
 				</AlertDialogHeader>
 
 				<AlertDialogFooter className="gap-3">
-					<AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+					<AlertDialogCancel className="rounded-xl" data-testid="cancel-delete">
+						Cancel
+					</AlertDialogCancel>
 
-					<AlertDialogAction onClick={handleDelete} className="rounded-xl">
+					<AlertDialogAction onClick={handleDelete} className="rounded-xl" data-testid="confirm-delete">
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>

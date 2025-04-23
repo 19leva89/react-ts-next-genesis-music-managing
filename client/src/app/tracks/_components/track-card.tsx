@@ -32,7 +32,10 @@ export const TrackCard = ({ data }: Props) => {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false)
 
 	return (
-		<Card className="relative group overflow-hidden p-2 m-3 transition bg-neutral-400/5 border-none hover:bg-neutral-400/10">
+		<Card
+			className="relative group overflow-hidden p-2 m-3 transition bg-neutral-400/5 border-none hover:bg-neutral-400/10"
+			data-testid={`track-item-${data.id}`}
+		>
 			<CardHeader className="relative p-0">
 				<div className="w-full aspect-square rounded-lg overflow-hidden">
 					<Image
@@ -52,12 +55,20 @@ export const TrackCard = ({ data }: Props) => {
 							</DropdownMenuTrigger>
 
 							<DropdownMenuContent side="right" align="start" className="rounded-xl">
-								<DropdownMenuItem onSelect={() => setIsDialogOpen(true)} className="cursor-pointer">
+								<DropdownMenuItem
+									onSelect={() => setIsDialogOpen(true)}
+									className="cursor-pointer"
+									data-testid={`edit-track-${data.id}`}
+								>
 									<PencilIcon className="size-4 mr-2" />
 									Edit
 								</DropdownMenuItem>
 
-								<DropdownMenuItem onSelect={() => setIsDeleteDialogOpen(true)} className="cursor-pointer">
+								<DropdownMenuItem
+									onSelect={() => setIsDeleteDialogOpen(true)}
+									className="cursor-pointer"
+									data-testid={`delete-track-${data.id}`}
+								>
 									<TrashIcon className="size-4 mr-2" />
 									Delete
 								</DropdownMenuItem>
@@ -68,8 +79,13 @@ export const TrackCard = ({ data }: Props) => {
 			</CardHeader>
 
 			<CardContent className="p-2 space-y-1">
-				<CardTitle className="text-base text-white truncate">{data.title}</CardTitle>
-				<CardDescription className="truncate text-sm">By {data.artist}</CardDescription>
+				<CardTitle className="text-base text-white truncate" data-testid={`track-item-${data.id}-title`}>
+					{data.title}
+				</CardTitle>
+
+				<CardDescription className="truncate text-sm" data-testid={`track-item-${data.id}-artist`}>
+					By {data.artist}
+				</CardDescription>
 			</CardContent>
 
 			<CardFooter className="absolute bottom-5 right-0 z-10">

@@ -60,13 +60,15 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 			<div className="flex gap-3">
 				{/* Sort filter */}
 				<Select value={sortField} onValueChange={(value) => updateSearchParams({ sort: value })}>
-					<SelectTrigger className="w-[180px]">
+					<SelectTrigger className="w-[180px]" data-testid="sort-select">
 						<SelectValue placeholder="Sort by" />
 					</SelectTrigger>
 
 					<SelectContent>
 						<SelectItem value="title">Title</SelectItem>
-						<SelectItem value="artist">Artist</SelectItem>
+						<SelectItem value="artist" data-testid="filter-artist">
+							Artist
+						</SelectItem>
 						<SelectItem value="album">Album</SelectItem>
 						<SelectItem value="createdAt">Date added</SelectItem>
 					</SelectContent>
@@ -77,7 +79,7 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 					value={sortGenre}
 					onValueChange={(value) => updateSearchParams({ genre: value === 'all' ? undefined : value })}
 				>
-					<SelectTrigger className="w-[180px]">
+					<SelectTrigger className="w-[180px]" data-testid="filter-genre">
 						<SelectValue placeholder="Select genre" />
 					</SelectTrigger>
 
@@ -113,6 +115,7 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
 					className="pr-10 text-white"
+					data-testid="search-input"
 				/>
 
 				{searchInput && (
