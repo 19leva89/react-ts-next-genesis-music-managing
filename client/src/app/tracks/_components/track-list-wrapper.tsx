@@ -1,8 +1,8 @@
 'use client'
 
 import { Track } from '@/app/types'
-import { BulkDelete } from './bulk-delete'
-import { PageContent } from './page-content'
+import { BulkDelete } from '@/components/shared'
+import { PageContent } from '@/app/tracks/_components'
 import { useTrackSelection } from '@/hooks/use-track-selection'
 
 type Props = {

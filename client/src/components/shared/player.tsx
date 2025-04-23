@@ -1,47 +1,34 @@
 'use client'
 
-import Image from 'next/image'
+import { XIcon } from 'lucide-react'
 
-import { Track } from '@/app/types'
+import { Button } from '@/components/ui'
+import { usePlayer } from '@/hooks/use-player'
 import { Wavesurfer } from '@/components/shared'
 import { BACKEND_API_URL } from '@/lib/constants'
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui'
+import { useGetTrackById } from '@/hooks/use-get-track-by-id'
 
-interface Props {
-	track: Track
-	isOpen: boolean
-	onClose: () => void
-}
+export const Player = () => {
+	const player = usePlayer()
+	const { track } = useGetTrackById(player.currentTrack?.slug || '')
 
-export const Player = ({ track, isOpen, onClose }: Props) => {
-	const fullUrl = `${BACKEND_API_URL}/files/${track.audioFile}`
+	const fullUrl = `${BACKEND_API_URL}/files/${track?.audioFile}`
+
+	if (!player || !fullUrl || !player.currentTrack) return null
 
 	return (
-		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="sm:max-w-[425px]">
-				<div className="flex flex-col items-center gap-4">
-					<div className="relative w-64 h-64">
-						<Image
-							src={track.coverImage || '/img/no-cover-image.png'}
-							alt="Album Artwork"
-							fill
-							className="object-cover rounded-lg"
-						/>
-					</div>
+		<div className="fixed w-full h-30 bg-black">
+			<Button variant="link" onClick={player.clearTrack} className="absolute -top-1 right-1">
+				<XIcon className="size-4 text-white" />
+			</Button>
 
-					<div className="text-center">
-						<DialogTitle className="text-lg font-semibold">{track.title}</DialogTitle>
-
-						<DialogDescription className="text-sm text-muted-foreground">{track.artist}</DialogDescription>
-					</div>
-
-					{track.audioFile ? (
-						<Wavesurfer audioUrl={fullUrl} />
-					) : (
-						<p className="text-sm text-muted-foreground">No audio file found</p>
-					)}
-				</div>
-			</DialogContent>
-		</Dialog>
+			<div className="flex flex-col items-center gap-4">
+				{track ? (
+					<Wavesurfer audioUrl={fullUrl} />
+				) : (
+					<p className="text-sm text-muted-foreground">No audio file found</p>
+				)}
+			</div>
+		</div>
 	)
 }

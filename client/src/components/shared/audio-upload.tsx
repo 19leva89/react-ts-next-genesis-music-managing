@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { Trash2Icon, UploadIcon } from 'lucide-react'
 import { ChangeEvent, useEffect, useState } from 'react'
 
+import { usePlayer } from '@/hooks/use-player'
 import { Button, Input } from '@/components/ui'
 import { BACKEND_API_URL } from '@/lib/constants'
 import { deleteTrackFile, uploadTrackFile } from '@/app/actions'
@@ -18,6 +19,8 @@ interface Props {
 }
 
 export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
+	const player = usePlayer()
+
 	const [audioUrl, setAudioUrl] = useState<string>('')
 	const [audioFile, setAudioFile] = useState<File | null>(null)
 
@@ -55,6 +58,7 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 			await uploadTrackFile(trackId, audioFile)
 
 			setAudioUrl(URL.createObjectURL(audioFile))
+			player.clearTrack()
 
 			toast.success('Audio uploaded successfully!')
 		} catch (error: any) {
@@ -68,6 +72,7 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 
 			setAudioFile(null)
 			setAudioUrl('')
+			player.clearTrack()
 
 			toast.success('Audio removed successfully!')
 		} catch (error: any) {

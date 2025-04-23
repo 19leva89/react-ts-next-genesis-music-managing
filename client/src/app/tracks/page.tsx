@@ -1,8 +1,6 @@
 import { getAllTracks } from '@/app/actions'
-import { Header, ListItem } from '@/components/shared'
-import { TrackFilters } from './_components/track-filters'
-import { TrackListWrapper } from './_components/track-list-wrapper'
-import { PaginationClient } from '@/components/shared/pagination-client'
+import { Header, ListItem, PaginationClient } from '@/components/shared'
+import { TrackFilters, TrackListWrapper } from '@/app/tracks/_components'
 
 export const revalidate = 0
 

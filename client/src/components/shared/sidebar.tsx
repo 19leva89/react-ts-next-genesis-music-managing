@@ -6,7 +6,7 @@ import { HouseIcon, SearchIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Track } from '@/app/types'
-
+import { usePlayer } from '@/hooks/use-player'
 import { Box, Library, SidebarItem } from '@/components/shared'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 }
 
 export const Sidebar = ({ children, tracks }: Props) => {
+	const player = usePlayer()
 	const pathname = usePathname()
 
 	const routes = useMemo(
@@ -36,8 +37,7 @@ export const Sidebar = ({ children, tracks }: Props) => {
 	)
 
 	return (
-		// use cn h-[calc(100%-100px) when use player
-		<div className={cn('flex h-full ]')}>
+		<div className={cn('flex h-full', player.currentTrack && 'h-[calc(100%-120px)]')}>
 			<div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
 				<Box>
 					<div className="flex flex-col gap-y-4 px-5 py-4">
@@ -46,10 +46,12 @@ export const Sidebar = ({ children, tracks }: Props) => {
 						))}
 					</div>
 				</Box>
+
 				<Box className="overflow-y-auto h-full">
 					<Library tracks={tracks} />
 				</Box>
 			</div>
+
 			<main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
 		</div>
 	)

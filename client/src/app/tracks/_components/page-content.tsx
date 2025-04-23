@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils'
 import { Track } from '@/app/types'
 import { Checkbox } from '@/components/ui'
-import { TrackCard } from '@/components/shared'
+import { TrackCard } from '@/app/tracks/_components'
 
 interface Props {
 	tracks: Track[]

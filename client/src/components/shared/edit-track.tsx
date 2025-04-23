@@ -20,6 +20,7 @@ import {
 	SelectValue,
 } from '@/components/ui'
 import { Track } from '@/app/types'
+import { usePlayer } from '@/hooks/use-player'
 import { updateTrackById } from '@/app/actions'
 import { AudioUpload } from '@/components/shared'
 import { useGetGenres } from '@/hooks/use-get-genres'
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export const EditTrack = ({ track, isOpen, onClose }: Props) => {
+	const player = usePlayer()
 	const router = useRouter()
 
 	const { genres: availableGenres } = useGetGenres()
@@ -92,6 +94,7 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 
 			toast.success('Track updated!')
 			onClose()
+			player.clearTrack()
 			router.refresh()
 		} catch (err: any) {
 			toast.error(err.message || 'Something went wrong')

@@ -1,10 +1,12 @@
 'use client'
 
-import { FormEvent, useEffect } from 'react'
+import { XIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
+import { useDebounce } from '@/hooks/use-debounce'
 import { useGetGenres } from '@/hooks/use-get-genres'
-import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
+import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 
 interface Props {
 	sortField: string
@@ -18,6 +20,10 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 	const params = useSearchParams()
 
 	const { genres: availableGenres, loadGenres } = useGetGenres()
+
+	const [searchInput, setSearchInput] = useState<string>(searchQuery || '')
+
+	const debouncedSearch = useDebounce(searchInput, 500)
 
 	const updateSearchParams = (newParams: Partial<Record<string, string>>) => {
 		const updatedParams = new URLSearchParams(params.toString())
@@ -33,14 +39,9 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 		router.push(`?${updatedParams.toString()}`)
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
-		const formData = new FormData(e.currentTarget)
-		const search = formData.get('search') as string
-
-		updateSearchParams({ search })
-	}
+	useEffect(() => {
+		loadGenres()
+	}, [])
 
 	useEffect(() => {
 		if (sortGenre && sortGenre !== 'genre') {
@@ -49,8 +50,10 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 	}, [sortGenre])
 
 	useEffect(() => {
-		loadGenres()
-	}, [])
+		if (debouncedSearch !== searchQuery) {
+			updateSearchParams({ search: debouncedSearch })
+		}
+	}, [debouncedSearch])
 
 	return (
 		<div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto text-white">
@@ -102,18 +105,26 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 				</Select>
 			</div>
 
-			<form onSubmit={handleSubmit} className="flex gap-2">
+			{/* Debounced Search Input */}
+			<div className="relative w-full md:w-[200px]">
 				<Input
 					name="search"
 					placeholder="Search tracks..."
-					defaultValue={searchQuery}
-					className="w-full md:w-[200px] text-white"
+					value={searchInput}
+					onChange={(e) => setSearchInput(e.target.value)}
+					className="pr-10 text-white"
 				/>
 
-				<Button variant="secondary" type="submit">
-					Search
-				</Button>
-			</form>
+				{searchInput && (
+					<button
+						type="button"
+						onClick={() => setSearchInput('')}
+						className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-neutral-400"
+					>
+						<XIcon className="size-4" />
+					</button>
+				)}
+			</div>
 		</div>
 	)
 }

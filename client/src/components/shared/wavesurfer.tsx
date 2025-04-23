@@ -25,7 +25,6 @@ export const Wavesurfer = ({ audioUrl }: Props) => {
 			progressColor: '#F90',
 			url: audioUrl,
 			dragToSeek: true,
-			width: '20rem',
 			hideScrollbar: true,
 			normalize: true,
 			barGap: 1,
@@ -72,27 +71,25 @@ export const Wavesurfer = ({ audioUrl }: Props) => {
 	}
 
 	return (
-		<div className="flex justify-center items-center">
-			<div className="flex flex-col items-center p-4 rounded-xl bg-[#191b28]">
-				<div ref={waveformRef} className="mb-4" />
+		<div className="flex flex-col w-screen items-center rounded-xl">
+			<div ref={waveformRef} className="w-3/4 mb-2" />
 
-				<div className="flex gap-4">
-					<Button variant="ghost" size="icon" onClick={handleSkipBack} className="text-white">
-						<SkipBackIcon className="size-6" />
-					</Button>
+			<div className="flex gap-4">
+				<Button variant="ghost" size="icon" onClick={handleSkipBack} className="text-white">
+					<SkipBackIcon className="size-6" />
+				</Button>
 
-					<Button variant="ghost" size="icon" onClick={handlePlayPause} className="bg-[#f90] text-white">
-						{isPlaying ? <PauseIcon className="size-6" /> : <PlayIcon className="size-6" />}
-					</Button>
+				<Button variant="ghost" size="icon" onClick={handlePlayPause} className="bg-[#f90] text-white">
+					{isPlaying ? <PauseIcon className="size-6" /> : <PlayIcon className="size-6" />}
+				</Button>
 
-					<Button variant="ghost" size="icon" onClick={handleStop} className="text-white">
-						<SquareIcon className="size-6" />
-					</Button>
+				<Button variant="ghost" size="icon" onClick={handleStop} className="text-white">
+					<SquareIcon className="size-6" />
+				</Button>
 
-					<Button variant="ghost" size="icon" onClick={handleSkipForward} className="text-white">
-						<SkipForwardIcon className="size-6" />
-					</Button>
-				</div>
+				<Button variant="ghost" size="icon" onClick={handleSkipForward} className="text-white">
+					<SkipForwardIcon className="size-6" />
+				</Button>
 			</div>
 		</div>
 	)
