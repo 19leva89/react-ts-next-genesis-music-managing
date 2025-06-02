@@ -17,6 +17,9 @@ const compat = new FlatCompat({
 
 export default defineConfig([
 	{
+		ignores: ['client/**'],
+	},
+	{
 		extends: compat.extends(
 			"eslint-config-prettier",
 			"eslint:recommended",

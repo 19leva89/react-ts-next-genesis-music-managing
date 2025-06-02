@@ -33,43 +33,43 @@ export const TrackCard = ({ data }: Props) => {
 
 	return (
 		<Card
-			className="relative group overflow-hidden p-2 m-3 transition bg-neutral-400/5 border-none hover:bg-neutral-400/10"
+			className='group relative m-3 overflow-hidden border-none bg-neutral-400/5 p-2 transition hover:bg-neutral-400/10'
 			data-testid={`track-item-${data.id}`}
 		>
-			<CardHeader className="relative p-0">
-				<div className="w-full aspect-square rounded-lg overflow-hidden">
+			<CardHeader className='relative p-0'>
+				<div className='aspect-square w-full overflow-hidden rounded-lg'>
 					<Image
 						src={data.coverImage || '/img/no-cover-image.png'}
-						alt="Album Artwork"
+						alt='Album Artwork'
 						fill
-						className="object-cover"
+						className='object-cover'
 					/>
 
 					{/* Dropdown Menu Button */}
-					<div className="absolute top-2 right-2 z-10">
+					<div className='absolute top-2 right-2 z-10'>
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild className="cursor-pointer">
-								<Button variant="secondary" size="icon" className="p-1 bg-neutral-900/5">
-									<EllipsisVerticalIcon className="size-4" />
+							<DropdownMenuTrigger asChild className='cursor-pointer'>
+								<Button variant='secondary' size='icon' className='bg-neutral-900/5 p-1'>
+									<EllipsisVerticalIcon className='size-4' />
 								</Button>
 							</DropdownMenuTrigger>
 
-							<DropdownMenuContent side="right" align="start" className="rounded-xl">
+							<DropdownMenuContent side='right' align='start' className='rounded-xl'>
 								<DropdownMenuItem
 									onSelect={() => setIsDialogOpen(true)}
-									className="cursor-pointer"
+									className='cursor-pointer'
 									data-testid={`edit-track-${data.id}`}
 								>
-									<PencilIcon className="size-4 mr-2" />
+									<PencilIcon className='mr-2 size-4' />
 									Edit
 								</DropdownMenuItem>
 
 								<DropdownMenuItem
 									onSelect={() => setIsDeleteDialogOpen(true)}
-									className="cursor-pointer"
+									className='cursor-pointer'
 									data-testid={`delete-track-${data.id}`}
 								>
-									<TrashIcon className="size-4 mr-2" />
+									<TrashIcon className='mr-2 size-4' />
 									Delete
 								</DropdownMenuItem>
 							</DropdownMenuContent>
@@ -78,17 +78,17 @@ export const TrackCard = ({ data }: Props) => {
 				</div>
 			</CardHeader>
 
-			<CardContent className="p-2 space-y-1">
-				<CardTitle className="text-base text-white truncate" data-testid={`track-item-${data.id}-title`}>
+			<CardContent className='space-y-1 p-2'>
+				<CardTitle className='truncate text-base text-white' data-testid={`track-item-${data.id}-title`}>
 					{data.title}
 				</CardTitle>
 
-				<CardDescription className="truncate text-sm" data-testid={`track-item-${data.id}-artist`}>
+				<CardDescription className='truncate text-sm' data-testid={`track-item-${data.id}-artist`}>
 					By {data.artist}
 				</CardDescription>
 			</CardContent>
 
-			<CardFooter className="absolute bottom-5 right-0 z-10">
+			<CardFooter className='absolute right-0 bottom-5 z-10'>
 				<PlayButton onClick={() => setTrack(data)} />
 			</CardFooter>
 

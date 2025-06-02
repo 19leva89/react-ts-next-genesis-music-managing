@@ -81,31 +81,31 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-col gap-2">
-			<div className="text-sm text-muted-foreground">Audio file</div>
+		<div className='flex flex-col gap-2'>
+			<div className='text-sm text-muted-foreground'>Audio file</div>
 
 			{audioUrl && (
-				<div className="flex items-center gap-2">
-					<audio controls src={audioUrl} className="w-full" data-testid={`audio-player-${trackId}`} />
+				<div className='flex items-center gap-2'>
+					<audio controls src={audioUrl} className='w-full' data-testid={`audio-player-${trackId}`} />
 
 					<Button
-						variant="destructive"
-						type="button"
+						variant='destructive'
+						type='button'
 						onClick={handleRemoveAudio}
-						className="w-fit"
+						className='w-fit'
 						data-testid={`delete-track-${trackId}`}
 					>
-						<Trash2Icon className="size-4" />
+						<Trash2Icon className='size-4' />
 					</Button>
 				</div>
 			)}
 
 			{!audioUrl && (
-				<div className="flex gap-2">
+				<div className='flex gap-2'>
 					<Input
-						id="track"
-						type="file"
-						accept=".mp3, .wav"
+						id='track'
+						type='file'
+						accept='.mp3, .wav'
 						disabled={disabled}
 						onChange={handleChange}
 						data-testid={`upload-input-${trackId}`}
@@ -113,14 +113,14 @@ export const AudioUpload = ({ trackId, initialAudioUrl, disabled }: Props) => {
 
 					{audioFile && (
 						<Button
-							variant="outline"
-							type="button"
+							variant='outline'
+							type='button'
 							onClick={handleUpload}
 							disabled={disabled}
-							className="w-fit"
+							className='w-fit'
 							data-testid={`upload-track-${trackId}`}
 						>
-							<UploadIcon className="size-4 mr-2" />
+							<UploadIcon className='mr-2 size-4' />
 							Upload audio
 						</Button>
 					)}

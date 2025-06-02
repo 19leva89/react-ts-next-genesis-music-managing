@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export const revalidate = 0
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-	const { data: tracks, meta } = await getAllTracks({
+	const { data: tracks } = await getAllTracks({
 		page: 1,
 		limit: 10,
 		sort: 'title',
@@ -27,9 +27,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 	})
 
 	return (
-		<html lang="en">
+		<html lang='en'>
 			<body className={font.className}>
-				<Toaster position="bottom-right" expand={false} richColors data-testid="toast-container" />
+				<Toaster position='bottom-right' expand={false} richColors data-testid='toast-container' />
 
 				<ModalProvider />
 

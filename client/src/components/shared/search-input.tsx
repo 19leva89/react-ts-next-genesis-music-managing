@@ -27,7 +27,7 @@ export const SearchInput = () => {
 
 	return (
 		<Input
-			placeholder="What do you want to listen to?"
+			placeholder='What do you want to listen to?'
 			value={value}
 			onChange={(e) => setValue(e.target.value)}
 		/>

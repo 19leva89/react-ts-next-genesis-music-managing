@@ -16,67 +16,67 @@ export const Header = ({ children, className }: Props) => {
 	const router = useRouter()
 
 	return (
-		<div className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)} data-testid="header">
-			<div className="w-full mb-4 justify-between flex items-center">
-				<div className="hidden md:flex gap-x-2 items-center" data-testid="nav-buttons-desktop">
+		<div className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)} data-testid='header'>
+			<div className='mb-4 flex w-full items-center justify-between'>
+				<div className='hidden items-center gap-x-2 md:flex' data-testid='nav-buttons-desktop'>
 					<Button
-						variant="default"
-						size="icon"
+						variant='default'
+						size='icon'
 						onClick={() => router.back()}
-						className="rounded-full bg-black cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
-						data-testid="button-back"
+						className='cursor-pointer rounded-full bg-black transition duration-300 ease-in-out hover:opacity-75'
+						data-testid='button-back'
 					>
-						<ChevronLeftIcon size={35} className="size-6 text-white" />
+						<ChevronLeftIcon size={35} className='size-6 text-white' />
 					</Button>
 
 					<Button
-						variant="default"
-						size="icon"
+						variant='default'
+						size='icon'
 						onClick={() => router.forward()}
-						className="rounded-full bg-black cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
-						data-testid="button-forward"
+						className='cursor-pointer rounded-full bg-black transition duration-300 ease-in-out hover:opacity-75'
+						data-testid='button-forward'
 					>
-						<ChevronRightIcon size={35} className="size-6 text-white" />
+						<ChevronRightIcon size={35} className='size-6 text-white' />
 					</Button>
 				</div>
 
-				<div className="flex items-center gap-x-2 md:hidden" data-testid="nav-buttons-mobile">
+				<div className='flex items-center gap-x-2 md:hidden' data-testid='nav-buttons-mobile'>
 					<Button
-						variant="secondary"
-						size="icon"
-						className="rounded-full bg-white cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
-						data-testid="button-home"
+						variant='secondary'
+						size='icon'
+						className='cursor-pointer rounded-full bg-white transition duration-300 ease-in-out hover:opacity-75'
+						data-testid='button-home'
 					>
-						<HouseIcon size={20} className="size-5 text-black" />
+						<HouseIcon size={20} className='size-5 text-black' />
 					</Button>
 
 					<Button
-						variant="secondary"
-						size="icon"
-						className="rounded-full bg-white cursor-pointer hover:opacity-75 transition ease-in-out duration-300"
-						data-testid="button-search"
+						variant='secondary'
+						size='icon'
+						className='cursor-pointer rounded-full bg-white transition duration-300 ease-in-out hover:opacity-75'
+						data-testid='button-search'
 					>
-						<SearchIcon size={20} className="size-5 text-black" />
+						<SearchIcon size={20} className='size-5 text-black' />
 					</Button>
 				</div>
 
-				<div className="flex justify-between items-center gap-x-4" data-testid="auth-buttons">
+				<div className='flex items-center justify-between gap-x-4' data-testid='auth-buttons'>
 					<Button
-						variant="ghost"
-						size="lg"
+						variant='ghost'
+						size='lg'
 						onClick={() => {}}
-						className="rounded-xl cursor-pointer transition ease-in-out duration-300"
-						data-testid="button-sign-up"
+						className='cursor-pointer rounded-xl transition duration-300 ease-in-out'
+						data-testid='button-sign-up'
 					>
 						Sign Up
 					</Button>
 
 					<Button
-						variant="outline"
-						size="lg"
+						variant='outline'
+						size='lg'
 						onClick={() => {}}
-						className="rounded-xl cursor-pointer transition ease-in-out duration-300"
-						data-testid="button-log-in"
+						className='cursor-pointer rounded-xl transition duration-300 ease-in-out'
+						data-testid='button-log-in'
 					>
 						Log In
 					</Button>

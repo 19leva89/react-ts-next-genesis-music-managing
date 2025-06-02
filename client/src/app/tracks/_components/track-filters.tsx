@@ -56,21 +56,21 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 	}, [debouncedSearch])
 
 	return (
-		<div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto text-white">
-			<div className="flex gap-3">
+		<div className='flex w-full flex-col gap-3 text-white sm:flex-row md:w-auto'>
+			<div className='flex gap-3'>
 				{/* Sort filter */}
 				<Select value={sortField} onValueChange={(value) => updateSearchParams({ sort: value })}>
-					<SelectTrigger className="w-[180px]" data-testid="sort-select">
-						<SelectValue placeholder="Sort by" />
+					<SelectTrigger className='w-[180px]' data-testid='sort-select'>
+						<SelectValue placeholder='Sort by' />
 					</SelectTrigger>
 
 					<SelectContent>
-						<SelectItem value="title">Title</SelectItem>
-						<SelectItem value="artist" data-testid="filter-artist">
+						<SelectItem value='title'>Title</SelectItem>
+						<SelectItem value='artist' data-testid='filter-artist'>
 							Artist
 						</SelectItem>
-						<SelectItem value="album">Album</SelectItem>
-						<SelectItem value="createdAt">Date added</SelectItem>
+						<SelectItem value='album'>Album</SelectItem>
+						<SelectItem value='createdAt'>Date added</SelectItem>
 					</SelectContent>
 				</Select>
 
@@ -79,12 +79,12 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 					value={sortGenre}
 					onValueChange={(value) => updateSearchParams({ genre: value === 'all' ? undefined : value })}
 				>
-					<SelectTrigger className="w-[180px]" data-testid="filter-genre">
-						<SelectValue placeholder="Select genre" />
+					<SelectTrigger className='w-[180px]' data-testid='filter-genre'>
+						<SelectValue placeholder='Select genre' />
 					</SelectTrigger>
 
 					<SelectContent>
-						<SelectItem value="all">All genres</SelectItem>
+						<SelectItem value='all'>All genres</SelectItem>
 
 						{availableGenres.map((genre) => (
 							<SelectItem key={genre} value={genre}>
@@ -96,35 +96,35 @@ export const TrackFilters = ({ sortField, sortOrder, searchQuery, sortGenre }: P
 
 				{/* Order filter */}
 				<Select value={sortOrder} onValueChange={(value) => updateSearchParams({ order: value })}>
-					<SelectTrigger className="w-[180px]">
-						<SelectValue placeholder="Order" />
+					<SelectTrigger className='w-[180px]'>
+						<SelectValue placeholder='Order' />
 					</SelectTrigger>
 
 					<SelectContent>
-						<SelectItem value="desc">Descending</SelectItem>
-						<SelectItem value="asc">Ascending</SelectItem>
+						<SelectItem value='desc'>Descending</SelectItem>
+						<SelectItem value='asc'>Ascending</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>
 
 			{/* Debounced Search Input */}
-			<div className="relative w-full md:w-[200px]">
+			<div className='relative w-full md:w-[200px]'>
 				<Input
-					name="search"
-					placeholder="Search tracks..."
+					name='search'
+					placeholder='Search tracks...'
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
-					className="pr-10 text-white"
-					data-testid="search-input"
+					className='pr-10 text-white'
+					data-testid='search-input'
 				/>
 
 				{searchInput && (
 					<button
-						type="button"
+						type='button'
 						onClick={() => setSearchInput('')}
-						className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-neutral-400"
+						className='absolute top-1/2 right-2 -translate-y-1/2 text-white hover:text-neutral-400'
 					>
-						<XIcon className="size-4" />
+						<XIcon className='size-4' />
 					</button>
 				)}
 			</div>
