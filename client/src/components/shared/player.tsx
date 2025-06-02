@@ -17,16 +17,16 @@ export const Player = () => {
 	if (!player || !fullUrl || !player.currentTrack) return null
 
 	return (
-		<div className="fixed w-full h-30 bg-black" data-testid={`audio-player-${track?.id}`}>
-			<Button variant="link" onClick={player.clearTrack} className="absolute -top-1 right-1">
-				<XIcon className="size-4 text-white" />
+		<div className='fixed h-30 w-full bg-black' data-testid={`audio-player-${track?.id}`}>
+			<Button variant='link' onClick={player.clearTrack} className='absolute -top-1 right-1'>
+				<XIcon className='size-4 text-white' />
 			</Button>
 
-			<div className="flex flex-col items-center gap-4">
+			<div className='flex flex-col items-center gap-4'>
 				{track ? (
 					<Wavesurfer audioUrl={fullUrl} data-testid={`audio-progress-${track?.id}`} />
 				) : (
-					<p className="text-sm text-muted-foreground">No audio file found</p>
+					<p className='text-sm text-muted-foreground'>No audio file found</p>
 				)}
 			</div>
 		</div>

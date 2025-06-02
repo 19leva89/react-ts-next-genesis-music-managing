@@ -129,8 +129,8 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="rounded-xl sm:max-w-2xl max-[450px]:px-1">
-				<DialogHeader className="px-4">
+			<DialogContent className='rounded-xl max-[450px]:px-1 sm:max-w-2xl'>
+				<DialogHeader className='px-4'>
 					<DialogTitle>Edit track</DialogTitle>
 
 					<DialogDescription>Update values of {track.title} in your library</DialogDescription>
@@ -138,43 +138,43 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 
 				<form
 					onSubmit={handleSubmit(onValid, onInvalid)}
-					className="flex flex-col gap-y-4"
-					data-testid="track-form"
+					className='flex flex-col gap-y-4'
+					data-testid='track-form'
 				>
 					<Input
-						id="title"
-						placeholder="Title"
+						id='title'
+						placeholder='Title'
 						disabled={isLoading}
 						{...register('title', { required: true })}
-						data-testid="input-title"
+						data-testid='input-title'
 					/>
 
 					<Input
-						id="artist"
-						placeholder="Artist"
+						id='artist'
+						placeholder='Artist'
 						disabled={isLoading}
 						{...register('artist', { required: true })}
-						data-testid="input-artist"
+						data-testid='input-artist'
 					/>
 
 					<Input
-						id="album"
-						placeholder="Album (optional)"
+						id='album'
+						placeholder='Album (optional)'
 						disabled={isLoading}
 						{...register('album')}
-						data-testid="input-album"
+						data-testid='input-album'
 					/>
 
 					<Input
-						id="coverImage"
-						placeholder="Cover image URL (optional)"
+						id='coverImage'
+						placeholder='Cover image URL (optional)'
 						disabled={isLoading}
 						{...register('coverImage')}
-						data-testid="input-cover-image"
+						data-testid='input-cover-image'
 					/>
 
 					{/* Genre Input */}
-					<div className="flex items-center gap-2" data-testid="genre-selector">
+					<div className='flex items-center gap-2' data-testid='genre-selector'>
 						<Select
 							value={selectedGenreId}
 							onValueChange={(value) => {
@@ -183,8 +183,8 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 							}}
 							disabled={isLoading}
 						>
-							<SelectTrigger className="w-full">
-								<SelectValue placeholder="Select genre (optional)" />
+							<SelectTrigger className='w-full'>
+								<SelectValue placeholder='Select genre (optional)' />
 							</SelectTrigger>
 
 							<SelectContent>
@@ -199,15 +199,15 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 						</Select>
 					</div>
 
-					<div className="flex flex-wrap gap-2">
+					<div className='flex flex-wrap gap-2'>
 						{selectedGenres.map((genre) => (
-							<div key={genre} className="flex items-center bg-muted px-3 py-1 rounded-full text-sm">
+							<div key={genre} className='flex items-center rounded-full bg-muted px-3 py-1 text-sm'>
 								<span>{genre}</span>
 
 								<button
-									type="button"
+									type='button'
 									onClick={() => removeGenre(genre)}
-									className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
+									className='ml-2 cursor-pointer text-red-500 hover:text-red-700'
 								>
 									×
 								</button>
@@ -219,12 +219,12 @@ export const EditTrack = ({ track, isOpen, onClose }: Props) => {
 					<AudioUpload trackId={track.id} initialAudioUrl={track.audioFile} disabled={isLoading} />
 
 					<Button
-						variant="default"
-						size="lg"
+						variant='default'
+						size='lg'
 						disabled={isLoading}
-						type="submit"
-						className="cursor-pointer"
-						data-testid="submit-button"
+						type='submit'
+						className='cursor-pointer'
+						data-testid='submit-button'
 					>
 						Save changes
 					</Button>

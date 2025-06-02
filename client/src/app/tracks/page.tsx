@@ -36,22 +36,22 @@ const HomePage = async ({ searchParams }: Props) => {
 	})
 
 	return (
-		<div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto">
+		<div className='h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900'>
 			<Header>
-				<div className="mb-2">
-					<h1 className="text-white text-3xl font-semibold" data-testid="tracks-header">
+				<div className='mb-2'>
+					<h1 className='text-3xl font-semibold text-white' data-testid='tracks-header'>
 						Welcome Back
 					</h1>
 
-					<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4">
-						<ListItem image="/img/liked.png" name="Liked Tracks" href="liked" />
+					<div className='mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+						<ListItem image='/img/liked.png' name='Liked Tracks' href='liked' />
 					</div>
 				</div>
 			</Header>
 
-			<div className="mt-2 mb-7 px-6">
-				<div className="flex flex-wrap justify-between items-center gap-4">
-					<h2 className="text-white text-2xl font-semibold">Newest Tracks</h2>
+			<div className='mt-2 mb-7 px-6'>
+				<div className='flex flex-wrap items-center justify-between gap-4'>
+					<h2 className='text-2xl font-semibold text-white'>Newest Tracks</h2>
 
 					<TrackFilters
 						sortField={sortField}
@@ -64,7 +64,7 @@ const HomePage = async ({ searchParams }: Props) => {
 
 			<TrackListWrapper tracks={tracks} />
 
-			<div className="m-6">
+			<div className='m-6'>
 				<PaginationClient currentPage={meta.page} totalPages={meta.totalPages} />
 			</div>
 		</div>

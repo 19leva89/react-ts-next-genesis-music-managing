@@ -8,5 +8,5 @@ interface Props {
 }
 
 export const Box = ({ children, className }: Props) => {
-	return <div className={cn(`bg-neutral-900 rounded-lg h-fit w-full`, className)}>{children}</div>
+	return <div className={cn(`h-fit w-full rounded-lg bg-neutral-900`, className)}>{children}</div>
 }

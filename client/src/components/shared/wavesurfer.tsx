@@ -71,30 +71,30 @@ export const Wavesurfer = ({ audioUrl }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-col w-screen items-center rounded-xl">
-			<div ref={waveformRef} className="w-3/4 mb-2" data-testid="audio-progress" />
+		<div className='flex w-screen flex-col items-center rounded-xl'>
+			<div ref={waveformRef} className='mb-2 w-3/4' data-testid='audio-progress' />
 
-			<div className="flex gap-4">
-				<Button variant="ghost" size="icon" onClick={handleSkipBack} className="text-white">
-					<SkipBackIcon className="size-6" />
+			<div className='flex gap-4'>
+				<Button variant='ghost' size='icon' onClick={handleSkipBack} className='text-white'>
+					<SkipBackIcon className='size-6' />
 				</Button>
 
 				<Button
-					variant="ghost"
-					size="icon"
+					variant='ghost'
+					size='icon'
 					onClick={handlePlayPause}
-					className="bg-[#f90] text-white"
+					className='bg-[#f90] text-white'
 					data-testid={`play-button-${audioUrl}`}
 				>
-					{isPlaying ? <PauseIcon className="size-6" /> : <PlayIcon className="size-6" />}
+					{isPlaying ? <PauseIcon className='size-6' /> : <PlayIcon className='size-6' />}
 				</Button>
 
-				<Button variant="ghost" size="icon" onClick={handleStop} className="text-white">
-					<SquareIcon className="size-6" />
+				<Button variant='ghost' size='icon' onClick={handleStop} className='text-white'>
+					<SquareIcon className='size-6' />
 				</Button>
 
-				<Button variant="ghost" size="icon" onClick={handleSkipForward} className="text-white">
-					<SkipForwardIcon className="size-6" />
+				<Button variant='ghost' size='icon' onClick={handleSkipForward} className='text-white'>
+					<SkipForwardIcon className='size-6' />
 				</Button>
 			</div>
 		</div>

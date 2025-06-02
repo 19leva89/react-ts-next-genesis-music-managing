@@ -32,14 +32,14 @@ export const DeleteTrack = ({ track, isOpen, onClose }: Props) => {
 			toast.success('Track deleted successfully')
 
 			router.refresh()
-		} catch (error) {
+		} catch  {
 			toast.error('Failed to delete the track')
 		}
 	}
 
 	return (
 		<AlertDialog open={isOpen} onOpenChange={onClose}>
-			<AlertDialogContent className="px-8 rounded-xl" data-testid="confirm-dialog">
+			<AlertDialogContent className='rounded-xl px-8' data-testid='confirm-dialog'>
 				<AlertDialogHeader>
 					<AlertDialogTitle>Delete {track.title}?</AlertDialogTitle>
 
@@ -48,12 +48,12 @@ export const DeleteTrack = ({ track, isOpen, onClose }: Props) => {
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 
-				<AlertDialogFooter className="gap-3">
-					<AlertDialogCancel className="rounded-xl" data-testid="cancel-delete">
+				<AlertDialogFooter className='gap-3'>
+					<AlertDialogCancel className='rounded-xl' data-testid='cancel-delete'>
 						Cancel
 					</AlertDialogCancel>
 
-					<AlertDialogAction onClick={handleDelete} className="rounded-xl" data-testid="confirm-delete">
+					<AlertDialogAction onClick={handleDelete} className='rounded-xl' data-testid='confirm-delete'>
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>
